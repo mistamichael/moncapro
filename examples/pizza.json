@@ -41,25 +41,25 @@
     {
       "id": 7,
       "name": "Teig ausrollen / formen",
-      "duration": "5m",
+      "duration": "1m",
       "dependencies": [3]
     },
     {
       "id": 8,
       "name": "Pizza belegen (Soße + Belag)",
-      "duration": "5m",
+      "duration": "2m",
       "dependencies": [4, 5, 7]
     },
     {
       "id": 9,
       "name": "Pizza backen",
-      "duration": "15m",
+      "duration": "5m",
       "dependencies": [6, 8]
     },
     {
       "id": 10,
-      "name": "Pizza servieren & genießen",
-      "duration": "2m",
+      "name": "Pizza servieren",
+      "duration": "1m",
       "dependencies": [9]
     }
   ]
