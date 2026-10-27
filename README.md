@@ -2,10 +2,17 @@
 
 Critical path (CPM) project planning with Monte Carlo simulation, scenarios and MCP interface.
 
+[![PyPI](https://img.shields.io/pypi/v/moncapro.svg)](https://pypi.org/project/moncapro/)
+[![tests](https://github.com/mistamichael/moncapro/actions/workflows/tests.yml/badge.svg)](https://github.com/mistamichael/moncapro/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mistamichael/moncapro/blob/main/LICENSE)
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)
+
 Projects are plain JSON files. `moncapro` computes the critical path in working days, levels
 resources (people, vehicles), respects vacation, part-time work and holidays, compares
 what-if scenarios and simulates schedule risk with Monte Carlo runs. An MCP server lets AI
 clients (e.g. Claude Code) build and calculate projects through tools.
+
+A desktop editor built on moncapro is [sproject](https://github.com/mistamichael/sproject) (Dear PyGui).
 
 ## Installation
 
@@ -58,14 +65,14 @@ a directory of your own: `--cfg-dir` or `MONCAPRO_CFG`.
 
 | Topic | English | Deutsch |
 |---|---|---|
-| Command line | [doc/en/cli.md](doc/en/cli.md) | [doc/de/cli.md](doc/de/cli.md) |
-| Project file format | [doc/en/project-format.md](doc/en/project-format.md) | [doc/de/projektformat.md](doc/de/projektformat.md) |
-| Configuration | [doc/en/configuration.md](doc/en/configuration.md) | [doc/de/config_doc.md](doc/de/config_doc.md) |
-| AI interface (MCP) | [doc/en/ai-interface.md](doc/en/ai-interface.md) | [doc/de/ki-schnittstelle.md](doc/de/ki-schnittstelle.md) |
-| Examples | [doc/en/examples.md](doc/en/examples.md) | [doc/de/examples.md](doc/de/examples.md) |
-| Critical path method, dependency types, actuals and baseline | | [doc/de/critical-path-method.md](doc/de/critical-path-method.md), [doc/de/dependency_types.md](doc/de/dependency_types.md), [doc/de/termine-und-ist.md](doc/de/termine-und-ist.md) |
+| Command line | [doc/en/cli.md](https://github.com/mistamichael/moncapro/blob/main/doc/en/cli.md) | [doc/de/cli.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/cli.md) |
+| Project file format | [doc/en/project-format.md](https://github.com/mistamichael/moncapro/blob/main/doc/en/project-format.md) | [doc/de/projektformat.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/projektformat.md) |
+| Configuration | [doc/en/configuration.md](https://github.com/mistamichael/moncapro/blob/main/doc/en/configuration.md) | [doc/de/config_doc.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/config_doc.md) |
+| AI interface (MCP) | [doc/en/ai-interface.md](https://github.com/mistamichael/moncapro/blob/main/doc/en/ai-interface.md) | [doc/de/ki-schnittstelle.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/ki-schnittstelle.md) |
+| Examples | [doc/en/examples.md](https://github.com/mistamichael/moncapro/blob/main/doc/en/examples.md) | [doc/de/examples.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/examples.md) |
+| Critical path method, dependency types, actuals and baseline | | [doc/de/critical-path-method.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/critical-path-method.md), [doc/de/dependency_types.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/dependency_types.md), [doc/de/termine-und-ist.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/termine-und-ist.md) |
 
-Pre-computed example results: [doc/result_examples/](doc/result_examples/README.md).
+Pre-computed example results: [doc/result_examples/](https://github.com/mistamichael/moncapro/blob/main/doc/result_examples/README.md).
 
 ## Development
 
@@ -76,4 +83,4 @@ python -m pytest
 
 ## License
 
-MIT, see [LICENSE](LICENSE).
+MIT, see [LICENSE](https://github.com/mistamichael/moncapro/blob/main/LICENSE).
