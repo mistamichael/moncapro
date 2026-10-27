@@ -27,10 +27,10 @@ moncapro/
 │   └── examples/        # mitgelieferte Beispielprojekte – Package-Data
 ├── tests/               # pytest; tests/golden/ = Referenz-Exporte aller Beispiele
 ├── doc/{de,en}/         # Dokumentation, doc/img/ Diagramme, doc/result_examples/ fertige Ergebnisse
-└── .github/workflows/   # tests.yml (Matrix 3.10/3.13, Linux/Windows), publish.yml (Tag v* → TestPyPI → PyPI)
+└── .github/workflows/   # tests.yml (Matrix 3.12/3.13, Linux/Windows), publish.yml (Tag v* → TestPyPI → PyPI)
 ```
 
-- Python ≥ 3.10, Datenmodelle **Pydantic**. Kern-Abhängigkeiten nur `pydantic` und `holidays`;
+- Python ≥ 3.12, Datenmodelle **Pydantic**. Kern-Abhängigkeiten nur `pydantic` und `holidays`;
   alles andere sind Extras (`excel`, `html`, `svg`, `charts`, `mcp`, `all`, `dev`) und wird lazy importiert.
 - Version steht nur in `src/moncapro/__init__.py` (`__version__`), `pyproject.toml` liest sie von dort.
 

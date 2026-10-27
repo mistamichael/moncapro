@@ -5,7 +5,7 @@ Critical path (CPM) project planning with Monte Carlo simulation, scenarios and 
 [![PyPI](https://img.shields.io/pypi/v/moncapro.svg)](https://pypi.org/project/moncapro/)
 [![tests](https://github.com/mistamichael/moncapro/actions/workflows/tests.yml/badge.svg)](https://github.com/mistamichael/moncapro/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mistamichael/moncapro/blob/main/LICENSE)
-![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)
+![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)
 
 Projects are plain JSON files. `moncapro` computes the critical path in working days, levels
 resources (people, vehicles), respects vacation, part-time work and holidays, compares
@@ -21,7 +21,7 @@ pip install moncapro              # core: model, CPM, leveling, simulation, TXT/
 pip install "moncapro[all]"       # + Excel, HTML, SVG, Plotly charts, MCP server
 ```
 
-Extras: `excel`, `html`, `svg`, `charts`, `mcp`, `all`. Python 3.10 or newer.
+Extras: `excel`, `html`, `svg`, `charts`, `mcp`, `all`. Python 3.12 or newer.
 
 ## Quickstart
 
