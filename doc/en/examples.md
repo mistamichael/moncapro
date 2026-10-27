@@ -1,8 +1,8 @@
 # Example Projects
 
-> Part of the [sproject documentation](../../README.md#documentation). Deutsch: [doc/de/examples.md](../de/examples.md)
+> Part of the [moncapro documentation](../../README.md#documentation). Deutsch: [doc/de/examples.md](../de/examples.md)
 
-All examples are in [`examples/`](../../examples); pre-computed results in [doc/result_examples/](../result_examples/README.md).
+All examples are in [`src/moncapro/examples/`](../../src/moncapro/examples); pre-computed results in [doc/result_examples/](../result_examples/README.md).
 
 | File                   | Description                  | Features                          |
 | ---------------------- | ---------------------------- | --------------------------------- |

@@ -1,7 +1,7 @@
 """
 test.py
 =======
-Unit tests für sproject.py
+Unit tests für moncapro.cli
 """
 
 import unittest
@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 class TestSProjectIntegration(unittest.TestCase):
-    """Integrationstests für sproject.py Funktionen."""
+    """Integrationstests für die CLI-Funktionen."""
 
     def test_find_project_files(self):
         """Test ob find_project_files korrekt funktioniert."""

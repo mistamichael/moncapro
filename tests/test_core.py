@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Comprehensive unit tests for sproject
+Comprehensive unit tests for moncapro
 ======================================
 
 Tests all major components:

@@ -54,6 +54,26 @@ a directory of your own: `--cfg-dir` or `MONCAPRO_CFG`.
 | `MONCAPRO_LOG` | log files | `./log` |
 | `MONCAPRO_DATA` | CLI input projects | `./data` |
 
+## Documentation
+
+| Topic | English | Deutsch |
+|---|---|---|
+| Command line | [doc/en/cli.md](doc/en/cli.md) | [doc/de/cli.md](doc/de/cli.md) |
+| Project file format | [doc/en/project-format.md](doc/en/project-format.md) | [doc/de/projektformat.md](doc/de/projektformat.md) |
+| Configuration | [doc/en/configuration.md](doc/en/configuration.md) | [doc/de/config_doc.md](doc/de/config_doc.md) |
+| AI interface (MCP) | [doc/en/ai-interface.md](doc/en/ai-interface.md) | [doc/de/ki-schnittstelle.md](doc/de/ki-schnittstelle.md) |
+| Examples | [doc/en/examples.md](doc/en/examples.md) | [doc/de/examples.md](doc/de/examples.md) |
+| Critical path method, dependency types, actuals and baseline | | [doc/de/critical-path-method.md](doc/de/critical-path-method.md), [doc/de/dependency_types.md](doc/de/dependency_types.md), [doc/de/termine-und-ist.md](doc/de/termine-und-ist.md) |
+
+Pre-computed example results: [doc/result_examples/](doc/result_examples/README.md).
+
+## Development
+
+```bash
+python -m venv .venv && .venv/bin/pip install -e ".[dev]"    # Windows: .venv\Scripts\pip
+python -m pytest
+```
+
 ## License
 
 MIT, see [LICENSE](LICENSE).

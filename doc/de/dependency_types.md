@@ -1,8 +1,8 @@
-# Abhängigkeitstypen in sproject
+# Abhängigkeitstypen in moncapro
 
 ## Übersicht
 
-sproject unterstützt vier verschiedene Abhängigkeitstypen für Tasks, basierend auf der Critical Path Method (CPM):
+moncapro unterstützt vier verschiedene Abhängigkeitstypen für Tasks, basierend auf der Critical Path Method (CPM):
 
 1. **EA** - Ende-Anfang (Normalfolge) - **Standard**
 2. **AA** - Anfang-Anfang (Anfangsfolge)
@@ -172,6 +172,6 @@ Komplexes Loop-basiertes Projekt mit EA-Beziehungen und automatischen Pausen.
 
 ## Weitere Informationen
 
-- `lib/models/base.py` - TaskBase mit dependency-Feldern
-- `lib/models/cpm.py` - CPMCalculator mit Forward/Backward Pass
-- `examples/hausbau.json` - Beispielprojekt mit AA/EE
+- `src/moncapro/models/base.py` - TaskBase mit dependency-Feldern
+- `src/moncapro/models/cpm.py` - CPMCalculator mit Forward/Backward Pass
+- `src/moncapro/examples/hausbau.json` - Beispielprojekt mit AA/EE

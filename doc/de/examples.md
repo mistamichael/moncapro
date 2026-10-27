@@ -1,8 +1,8 @@
-# Beispielprojekte in sproject
+# Beispielprojekte in moncapro
 
 ## Übersicht
 
-Die Beispielprojekte demonstrieren verschiedene Funktionen und Anwendungsfälle von sproject:
+Die Beispielprojekte demonstrieren verschiedene Funktionen und Anwendungsfälle von moncapro:
 
 | Datei                  | Beschreibung               | Besonderheiten                    |
 | ---------------------- | -------------------------- | --------------------------------- |
@@ -107,13 +107,13 @@ Software-Phase:
 ### Verwendung
 ```bash
 # Excel erstellen (Tabs werden über cfg/excel_export.cfg gesteuert)
-python lib/sproject.py --project examples/hausbau.json --export xlsx
+moncapro --project src/moncapro/examples/hausbau.json --export xlsx
 
 # HTML-Report mit Mermaid-Diagrammen
-python lib/sproject.py --project examples/hausbau.json --export html
+moncapro --project src/moncapro/examples/hausbau.json --export html
 
 # Alle Grafiken als SVG im ZIP-Archiv
-python lib/sproject.py --project examples/hausbau.json --export zip
+moncapro --project src/moncapro/examples/hausbau.json --export zip
 
 # Ergebnisse ansehen
 results/hausbau.xlsx
@@ -269,13 +269,13 @@ duration = resource.truck.capacity / resource.B1.loading_speed_per_min
 
 ```bash
 # Vollständige Auswertung mit Excel
-python lib/sproject.py --project examples/erdaushub.json --export xlsx
+moncapro --project src/moncapro/examples/erdaushub.json --export xlsx
 
 # Nur Text-Ausgabe
-python lib/sproject.py --project examples/erdaushub.json --export txt
+moncapro --project src/moncapro/examples/erdaushub.json --export txt
 
 # Alle Grafiken als SVG im ZIP-Archiv
-python lib/sproject.py --project examples/erdaushub.json --export zip
+moncapro --project src/moncapro/examples/erdaushub.json --export zip
 
 # Ergebnisse ansehen
 results/erdaushub.xlsx  # Excel mit Gantt (Stunden-Auflösung!)
@@ -370,7 +370,7 @@ results/fassadenbau.xlsx  # PersonProject (Tage)
 ## Weiterführende Dokumentation
 
 - [dependency_types.md](DEPENDENCY_TYPES.md) - Detaillierte Erklärung aller Abhängigkeitstypen
-- [cfg/defaults.cfg](../../cfg/defaults.cfg) - Projekt-Standards
+- [cfg/defaults.cfg](../../src/moncapro/cfg/defaults.cfg) - Projekt-Standards
 
 ---
 
@@ -416,4 +416,4 @@ results/fassadenbau.xlsx  # PersonProject (Tage)
 }
 ```
 
-Viel Erfolg beim Projektmanagement mit sproject! 🚀
+Viel Erfolg beim Projektmanagement mit moncapro! 🚀

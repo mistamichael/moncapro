@@ -1,16 +1,18 @@
 # Kommandozeile (CLI)
 
-> Teil der [sproject-Dokumentation](../../README.de.md#dokumentation). English: [doc/en/cli.md](../en/cli.md)
+> Teil der [moncapro-Dokumentation](../../README.md#documentation). English: [doc/en/cli.md](../en/cli.md)
 
 ## Verwendung
 
 ### Einzelnes Projekt verarbeiten
 
-Lege deine Projektdatei (z. B. `newproject.json`) in den Ordner `data/` (`$PV_DATA`) und rufe
-`bin/create_reports.bat` (`.sh`) auf – es verarbeitet alle Projektdateien dort – oder direkt:
+Gib eine Projektdatei an (z. B. `newproject.json`). Ohne `--project` werden alle `project*.json` im
+Datenordner (`./data` bzw. `$MONCAPRO_DATA`) verarbeitet. `python -m moncapro` entspricht `moncapro`.
+Die Beispielprojekte liegen im Paket (`src/moncapro/examples/` im Repository,
+`moncapro.paths.get_examples_dir()` nach der Installation).
 
 ```bash
-python lib/sproject.py --project newproject.json
+moncapro --project newproject.json
 
 ```
 
@@ -18,48 +20,48 @@ python lib/sproject.py --project newproject.json
 
 ```bash
 # Nur JSON (Standard)
-python lib/sproject.py --project examples/tankdesign.json
+moncapro --project src/moncapro/examples/tankdesign.json
 
 # Mehrere Formate gleichzeitig
-python lib/sproject.py --project examples/hausbau.json --export txt,json,xlsx,md,html,zip
+moncapro --project src/moncapro/examples/hausbau.json --export txt,json,xlsx,md,html,zip
 
 # Alle verfügbaren Formate
-python lib/sproject.py --project examples/software_simple.json --export txt,json,xlsx,md,html,zip
+moncapro --project src/moncapro/examples/software_simple.json --export txt,json,xlsx,md,html,zip
 ```
 
 ### Alle Projekte im Verzeichnis verarbeiten
 
 ```bash
-python lib/sproject.py --data-dir examples --export json
+moncapro --data-dir src/moncapro/examples --export json
 ```
 
 ### Weitere Optionen
 
 ```bash
 # Ausgabeverzeichnis angeben
-python lib/sproject.py --project examples/pizza.json --output-dir ./meine_ergebnisse
+moncapro --project src/moncapro/examples/pizza.json --output-dir ./meine_ergebnisse
 
 # Startdatum überschreiben
-python lib/sproject.py --project examples/simpleproject.json --start-date 2026-06-01
+moncapro --project src/moncapro/examples/simpleproject.json --start-date 2026-06-01
 
 # Konfigurationsverzeichnis
-python lib/sproject.py --project examples/pizza.json --cfg-dir ./cfg
+moncapro --project src/moncapro/examples/pizza.json --cfg-dir ./cfg
 
 # Ausführliche Ausgabe
-python lib/sproject.py --project examples/pizza.json --verbose
+moncapro --project src/moncapro/examples/pizza.json --verbose
 
 # Alle Szenarien mit dem Basisplan vergleichen / ein Szenario statt des Basisplans rechnen
-python lib/sproject.py --project examples/software_simple.json --scenarios
-python lib/sproject.py --project examples/software_simple.json --scenario "Alice eine Woche krank" --export xlsx
+moncapro --project src/moncapro/examples/software_simple.json --scenarios
+moncapro --project src/moncapro/examples/software_simple.json --scenario "Alice eine Woche krank" --export xlsx
 
 # Monte-Carlo-Simulation mit 500 Läufen (reproduzierbar mit --seed)
-python lib/sproject.py --project examples/software_simple.json --simulate 500 --seed 42
+moncapro --project src/moncapro/examples/software_simple.json --simulate 500 --seed 42
 
 # Kleine interaktive HTML-Charts: plotly.js aus dem Internet laden statt einbetten (~4 MB)
-python lib/sproject.py --project examples/software_simple.json --export plotly,simulation --plotly-cdn
+moncapro --project src/moncapro/examples/software_simple.json --export plotly,simulation --plotly-cdn
 
 # Hilfe
-python lib/sproject.py --help
+moncapro --help
 ```
 
 ### Exportformate
@@ -77,7 +79,7 @@ python lib/sproject.py --help
 | `scenarios` | Szenario-Vergleich als HTML |
 | `simulation` | Monte-Carlo-Simulation als HTML (Histogramm, Kritikalität, Kennzahlen) |
 
-Diagramme von `--export plotly` (interaktives HTML) und `--export plotly_svg` für `examples/software_simple.json`:
+Diagramme von `--export plotly` (interaktives HTML) und `--export plotly_svg` für `src/moncapro/examples/software_simple.json`:
 
 ![Gantt-Diagramm](../img/gantt_de.svg)
 
@@ -106,6 +108,6 @@ ID      Name                           Dauer    FAZ    FEZ    SAZ    SEZ    GP  
 
 Logdateien werden automatisch unter `log/` erstellt:
 
-- Format: `sproject_YYYYMMDD_HHMMSS.log`
+- Format: `moncapro_YYYYMMDD_HHMMSS.log`
 - Konsole: INFO-Level (wichtige Meldungen)
 - Datei: DEBUG-Level (vollständige Details)

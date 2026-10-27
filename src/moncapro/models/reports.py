@@ -1,5 +1,5 @@
 """
-Report models for sproject
+Report models for moncapro
 ===========================
 
 Models for different report types (Gantt Chart, Resource List, etc.)

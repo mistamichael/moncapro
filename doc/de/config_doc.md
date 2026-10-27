@@ -1,6 +1,6 @@
 # Konfigurationsdateien
 
-Das `cfg/`-Verzeichnis enthält alle Konfigurationsdateien für sproject. Jede Export-Funktion hat eine eigene Config-Datei — so lassen sich Inhalt, Reihenfolge und Bezeichnungen der Ausgaben ohne Code-Änderungen anpassen.
+Das `cfg/`-Verzeichnis (mitgeliefert im Paket, `src/moncapro/cfg/`) enthält alle Konfigurationsdateien für moncapro. Eigene Anpassungen: Verzeichnis kopieren und mit `--cfg-dir` bzw. `MONCAPRO_CFG` darauf zeigen (ersetzt das mitgelieferte vollständig). Jede Export-Funktion hat eine eigene Config-Datei — so lassen sich Inhalt, Reihenfolge und Bezeichnungen der Ausgaben ohne Code-Änderungen anpassen.
 
 ---
 

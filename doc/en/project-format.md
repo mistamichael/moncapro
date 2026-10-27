@@ -1,6 +1,6 @@
 # Project File Format (JSON)
 
-> Part of the [sproject documentation](../../README.md#documentation). Deutsch: [doc/de/projektformat.md](../de/projektformat.md)
+> Part of the [moncapro documentation](../../README.md#documentation). Deutsch: [doc/de/projektformat.md](../de/projektformat.md)
 
 ## Minimal Example
 
@@ -157,7 +157,7 @@ Uncertainties for the Monte Carlo simulation are set per task; scenarios are nam
 | `scenarios[].probability` | The scenario occurs with this probability in the simulation; without it the scenario is only compared |
 
 Scenario comparison (`--export scenarios`) and Monte Carlo simulation with criticality (`--export simulation`)
-for `examples/software_simple.json`:
+for `src/moncapro/examples/software_simple.json`:
 
 ![Scenario comparison](../img/scenarios_en.svg)
 
@@ -165,4 +165,4 @@ for `examples/software_simple.json`:
 
 ![Criticality](../img/criticality_en.svg)
 
-Details and how to read the charts (in German): [doc/de/termine-und-ist.md](../de/termine-und-ist.md). Example: `examples/software_simple.json`.
+Details and how to read the charts (in German): [doc/de/termine-und-ist.md](../de/termine-und-ist.md). Example: `src/moncapro/examples/software_simple.json`.

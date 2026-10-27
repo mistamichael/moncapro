@@ -1,5 +1,5 @@
 """
-Pydantic models for sproject JSON structures
+Pydantic models for moncapro JSON structures
 =============================================
 
 Usage:

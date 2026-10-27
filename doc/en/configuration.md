@@ -1,8 +1,10 @@
 # Configuration
 
-> Part of the [sproject documentation](../../README.md#documentation). Deutsch: [doc/de/config_doc.md](../de/config_doc.md)
+> Part of the [moncapro documentation](../../README.md#documentation). Deutsch: [doc/de/config_doc.md](../de/config_doc.md)
 
-All defaults are read from `cfg/defaults.cfg`:
+The package ships its own `cfg/` directory (working hours, calendar, export layout). To change settings,
+copy it, edit the copy and point to it with `--cfg-dir` or `MONCAPRO_CFG`. A directory you provide replaces the
+packaged one as a whole, so copy all files. All defaults are read from `defaults.cfg`:
 
 ```ini
 [CPM]

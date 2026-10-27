@@ -1,10 +1,10 @@
 # ============================================================
 # Makefile Code Quality Targets
-# Quellcode liegt in: lib/
+# Quellcode liegt in: src/moncapro/
 # Tools: vulture, skylos, pyright, mypy
 # ============================================================
 
-SRC_DIR := lib
+SRC_DIR := src/moncapro
 
 .PHONY: lint lint-dead lint-types vulture skylos pyright mypy help
 

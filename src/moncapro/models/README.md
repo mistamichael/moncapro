@@ -1,4 +1,4 @@
-# Pydantic Models für sproject
+# Pydantic Models für moncapro
 
 Type-safe Pydantic-Modelle zum Laden und Validieren von Projekt-JSON-Dateien.
 
@@ -241,8 +241,7 @@ class TimeRange(BaseModel):
 Teste alle Modelle:
 
 ```bash
-cd lib
-python test_models.py
+python -m pytest tests/test_model_roundtrip.py
 ```
 
 Beispiel-Nutzung:

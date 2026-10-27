@@ -2,7 +2,7 @@
 Doku-Bilder erzeugen
 ====================
 
-Rechnet examples/software_simple.json und schreibt die Diagramme der README und der
+Rechnet src/moncapro/examples/software_simple.json und schreibt die Diagramme der README und der
 Doku als SVG nach doc/img/ – je Sprache (de, en):
 
     python doc/make_doc_images.py
@@ -15,17 +15,16 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT))
 
-from lib.charts import build_figures, build_scenario_figures, build_simulation_figures, write_image  # noqa: E402
-from lib.models import load_project  # noqa: E402
-from lib.paths import get_cfg_dir  # noqa: E402
-from lib.scenarios import compare_scenarios  # noqa: E402
-from lib.schedule import build_schedule  # noqa: E402
-from lib.simulation import simulate  # noqa: E402
+from moncapro.charts import build_figures, build_scenario_figures, build_simulation_figures, write_image  # noqa: E402
+from moncapro.models import load_project  # noqa: E402
+from moncapro.paths import get_cfg_dir, get_examples_dir  # noqa: E402
+from moncapro.scenarios import compare_scenarios  # noqa: E402
+from moncapro.schedule import build_schedule  # noqa: E402
+from moncapro.simulation import simulate  # noqa: E402
 
 OUT = ROOT / "doc" / "img"
-EXAMPLE = ROOT / "examples" / "software_simple.json"
+EXAMPLE = get_examples_dir() / "software_simple.json"
 WIDTH = 1100
 
 

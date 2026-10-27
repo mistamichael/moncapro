@@ -1,6 +1,6 @@
 # Termine, Ressourcen und Plan gegen Ist
 
-Alle hier beschriebenen Angaben sind optional. Ohne sie rechnet sproject wie bisher.
+Alle hier beschriebenen Angaben sind optional. Ohne sie rechnet moncapro wie bisher.
 
 ## Feste Termine
 
@@ -18,7 +18,7 @@ Pro Task in der Projektdatei:
 | `deadline` | Spätestes Ende. Datum ohne Uhrzeit = Ende des Tages. |
 
 Eine verfehlte Deadline erscheint als negativer Puffer und als Warnung in CLI, TXT, Markdown,
-JSON, GUI und im Plotly-Gantt (rote Raute). Bei Loop- und Instance-Tasks gilt `not_before` für den
+JSON, sproject-GUI und im Plotly-Gantt (rote Raute). Bei Loop- und Instance-Tasks gilt `not_before` für den
 ersten, `deadline` für den letzten Zyklus.
 
 ## Ressourcen: wer kann wie viel gleichzeitig?
@@ -32,7 +32,7 @@ ersten, `deadline` für den letzten Zyklus.
 
 Beim LKW ist `capacity` die **Ladekapazität** (m³), nicht die Zahl paralleler Fahrten.
 
-Teilen sich Tasks eine Ressource, plant sproject sie nacheinander ein. Die Wartebeziehung zählt wie
+Teilen sich Tasks eine Ressource, plant moncapro sie nacheinander ein. Die Wartebeziehung zählt wie
 eine Abhängigkeit – Puffer und kritischer Pfad passen dadurch zum eingeplanten Ablauf. Im
 Plotly-Tooltip steht, um wie viel ein Task verschoben wurde und auf wen er wartet.
 
@@ -77,14 +77,14 @@ Auf Projektebene:
 **Baseline speichern** (einmal, wenn der Plan freigegeben ist):
 
 ```bash
-python lib/sproject.py --project mein_projekt.json --save-baseline
+moncapro --project mein_projekt.json --save-baseline
 ```
 
-oder in der GUI im Ergebnis-Tab „Baseline speichern“ und danach das Projekt speichern.
+oder in der sproject-GUI im Ergebnis-Tab „Baseline speichern“ und danach das Projekt speichern.
 
 Ausgaben: Stichtag, erledigte/laufende Tasks, Prognose-Ende, Baseline-Ende und Verzug in allen
 Reports; im Gantt ein grauer Baseline-Balken unter jedem Task, der erledigte Anteil in Grün und eine
-Stichtag-Linie. Beispiel: [examples/software_simple_ist.json](../../examples/software_simple_ist.json).
+Stichtag-Linie. Beispiel: [src/moncapro/examples/software_simple_ist.json](../../src/moncapro/examples/software_simple_ist.json).
 
 ## Szenarien (Was wäre wenn?)
 
@@ -113,23 +113,23 @@ Benannte Varianten des Plans auf Projektebene. Der Basisplan bleibt unverändert
 lassen sich auch direkt im Basisplan verwenden.
 
 ```bash
-python lib/sproject.py --project mein_projekt.json --scenarios                   # Vergleichstabelle
-python lib/sproject.py --project mein_projekt.json --export scenarios            # Vergleich als HTML
-python lib/sproject.py --project mein_projekt.json --scenario "LKW L1 defekt" --export txt,plotly
+moncapro --project mein_projekt.json --scenarios                   # Vergleichstabelle
+moncapro --project mein_projekt.json --export scenarios            # Vergleich als HTML
+moncapro --project mein_projekt.json --scenario "LKW L1 defekt" --export txt,plotly
 ```
 
-In der GUI erscheint der Vergleich im Ergebnis-Tab (Abschnitt „Szenarien“).
+In der sproject-GUI erscheint der Vergleich im Ergebnis-Tab (Abschnitt „Szenarien“).
 
-![Szenario-Vergleich für examples/software_simple.json](../img/scenarios_de.svg)
+![Szenario-Vergleich für src/moncapro/examples/software_simple.json](../img/scenarios_de.svg)
 
-*Szenario-Vergleich (`--export scenarios`) für `examples/software_simple.json`:* Jeder Balken ist die
+*Szenario-Vergleich (`--export scenarios`) für `src/moncapro/examples/software_simple.json`:* Jeder Balken ist die
 Projektdauer einer Variante, blau der Basisplan, rot die Abweichungen mit ihrem Mehraufwand gegenüber dem
 Basisplan. Die Tabelle darunter nennt Ende, Dauer, Kosten und verfehlte Deadlines – „Abnahme bis 27.03.“
 ändert die Dauer nicht, verfehlt aber eine Deadline.
 
 ## Monte-Carlo-Simulation (Wie sicher ist der Termin?)
 
-sproject rechnet den Plan viele Male mit zufälligen Abweichungen. Unsicherheit wird an drei Stellen
+moncapro rechnet den Plan viele Male mit zufälligen Abweichungen. Unsicherheit wird an drei Stellen
 angegeben:
 
 ```json
@@ -149,18 +149,18 @@ angegeben:
 | Szenario mit `probability` | das Szenario tritt mit dieser Wahrscheinlichkeit ein |
 
 ```bash
-python lib/sproject.py --project mein_projekt.json --simulate 500 --seed 1          # Kennzahlen
-python lib/sproject.py --project mein_projekt.json --export simulation --simulate 500
+moncapro --project mein_projekt.json --simulate 500 --seed 1          # Kennzahlen
+moncapro --project mein_projekt.json --export simulation --simulate 500
 ```
 
 Ergebnis: mit welcher Wahrscheinlichkeit der Plan (und die Baseline, Deadlines) gehalten wird,
 P50/P80/P90 („zu 80 % fertig bis …“), frühestes/spätestes Ende und die **Kritikalität** – wie oft
 ein Task auf dem kritischen Pfad lag. Das HTML zeigt Histogramm und Summenkurve. `--seed` macht
-Läufe reproduzierbar. In der GUI: Exportdialog „Simulation (HTML)“.
+Läufe reproduzierbar. In der sproject-GUI: Exportdialog „Simulation (HTML)“.
 
-![Monte-Carlo-Simulation für examples/software_simple.json](../img/simulation_de.svg)
+![Monte-Carlo-Simulation für src/moncapro/examples/software_simple.json](../img/simulation_de.svg)
 
-*Simulation mit 300 Läufen (`--export simulation`) für `examples/software_simple.json`:*
+*Simulation mit 300 Läufen (`--export simulation`) für `src/moncapro/examples/software_simple.json`:*
 
 - **Balken** – wie viele Läufe an welchem Tag fertig wurden.
 - **Rote Summenkurve** (rechte Achse) – mit welcher Wahrscheinlichkeit das Projekt bis zu diesem Tag fertig ist.

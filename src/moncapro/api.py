@@ -109,7 +109,7 @@ class ProjectSession:
         return self._switch(json.loads(file_path.read_text(encoding="utf-8")), file_path, "load")
 
     def save(self, path: Union[str, Path, None] = None) -> str:
-        """Speichert als sproject-JSON; ohne Pfad unter dem zuletzt verwendeten."""
+        """Speichert als moncapro-JSON; ohne Pfad unter dem zuletzt verwendeten."""
         target = Path(path) if path else self.path
         if target is None:
             raise ApiError("Kein Speicherpfad bekannt – bitte einen Pfad angeben")

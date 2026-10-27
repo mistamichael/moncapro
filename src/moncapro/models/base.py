@@ -1,5 +1,5 @@
 """
-Base models for sproject
+Base models for moncapro
 =========================
 
 Contains base classes and shared types for all project models.
