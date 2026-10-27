@@ -3,7 +3,7 @@ Scenario models
 ===============
 
 Ein Szenario ist eine benannte Liste von Änderungen am Basisplan.
-Angewendet wird es von lib/scenarios.py.
+Angewendet wird es von moncapro/scenarios.py.
 """
 
 from typing import List, Optional, Union

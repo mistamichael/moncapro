@@ -1,1 +1,1 @@
-"""MCP-Server für sproject: stellt lib.api.ProjectSession als Werkzeuge für KI-Clients bereit."""
+"""MCP-Server für moncapro: stellt moncapro.api.ProjectSession als Werkzeuge für KI-Clients bereit."""

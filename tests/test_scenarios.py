@@ -4,9 +4,9 @@ Szenarien: Änderungen anwenden und mit dem Basisplan vergleichen.
 
 import pytest
 
-from lib.models import Person, Project, Resource, SimpleTask
-from lib.models.scenario import Scenario, ScenarioChange
-from lib.scenarios import BASE_NAME, apply_scenario, compare_scenarios, find_scenario
+from moncapro.models import Person, Project, Resource, SimpleTask
+from moncapro.models.scenario import Scenario, ScenarioChange
+from moncapro.scenarios import BASE_NAME, apply_scenario, compare_scenarios, find_scenario
 
 START = "2026-03-02 08:00:00"     # Montag
 

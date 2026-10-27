@@ -2,35 +2,73 @@
 Paths
 =====
 
-Auflösung der Projektverzeichnisse über die PV_*-Umgebungsvariablen
-(gesetzt durch bin/setenv.*), mit Fallback relativ zum Projekt-Root.
+Auflösung der Verzeichnisse. Die mitgelieferten Konfigurationen (cfg/) und
+Beispiele (examples/) liegen im Paket; alles andere (Ergebnisse, Arbeitsdateien,
+Logs) liegt im Arbeitsverzeichnis des Nutzers und lässt sich über Umgebungs-
+variablen umlenken:
+
+    MONCAPRO_CFG      Konfigurationsverzeichnis (Standard: mitgeliefertes cfg/)
+    MONCAPRO_RESULTS  Ausgabeverzeichnis für Exporte (Standard: ./results)
+    MONCAPRO_WORK     Arbeitsdateien, Default für neue Projekte (Standard: .)
+    MONCAPRO_LOG      Logdateien (Standard: ./log)
+    MONCAPRO_DATA     Eingabe-Projektdateien der CLI (Standard: ./data)
+
+Die früheren PV_*-Variablen (PV_CFG, PV_RESULTS, ...) gelten weiter als Fallback.
 """
 
 import os
+import warnings
 from pathlib import Path
+from typing import Optional
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PACKAGE_DIR = Path(__file__).resolve().parent
+
+_WARNED: set = set()
 
 
-def _env_dir(var: str, default: str) -> Path:
-    value = os.environ.get(var)
-    return Path(value) if value else PROJECT_ROOT / default
+def env_path(name: str) -> Optional[Path]:
+    """Wert von MONCAPRO_<name>, ersatzweise PV_<name> (veraltet); None wenn nicht gesetzt."""
+    value = os.environ.get(f"MONCAPRO_{name}")
+    if value:
+        return Path(value)
+    legacy = os.environ.get(f"PV_{name}")
+    if legacy:
+        if name not in _WARNED:
+            _WARNED.add(name)
+            warnings.warn(f"PV_{name} ist veraltet, bitte MONCAPRO_{name} verwenden",
+                          DeprecationWarning, stacklevel=2)
+        return Path(legacy)
+    return None
 
 
 def get_cfg_dir() -> Path:
-    """Konfigurationsverzeichnis ($PV_CFG oder <root>/cfg)."""
-    return _env_dir('PV_CFG', 'cfg')
+    """Konfigurationsverzeichnis ($MONCAPRO_CFG oder das mitgelieferte cfg/)."""
+    return env_path("CFG") or PACKAGE_DIR / "cfg"
+
+
+def get_examples_dir() -> Path:
+    """Mitgelieferte Beispielprojekte."""
+    return PACKAGE_DIR / "examples"
 
 
 def get_results_dir(create: bool = True) -> Path:
-    """Ausgabeverzeichnis für Exporte ($PV_RESULTS oder <root>/results)."""
-    path = _env_dir('PV_RESULTS', 'results')
+    """Ausgabeverzeichnis für Exporte ($MONCAPRO_RESULTS oder ./results)."""
+    path = env_path("RESULTS") or Path("results")
     if create:
         path.mkdir(parents=True, exist_ok=True)
     return path
 
 
 def get_work_dir() -> Path:
-    """Default-Speicherort für neue Projekte ($PV_WORK oder aktuelles Verzeichnis)."""
-    value = os.environ.get('PV_WORK')
-    return Path(value) if value else Path.cwd()
+    """Default-Speicherort für neue Projekte ($MONCAPRO_WORK oder aktuelles Verzeichnis)."""
+    return env_path("WORK") or Path.cwd()
+
+
+def get_log_dir() -> Path:
+    """Logverzeichnis ($MONCAPRO_LOG oder ./log)."""
+    return env_path("LOG") or Path("log")
+
+
+def get_data_dir() -> Path:
+    """Verzeichnis mit Projektdateien für die CLI ($MONCAPRO_DATA oder ./data)."""
+    return env_path("DATA") or Path("data")

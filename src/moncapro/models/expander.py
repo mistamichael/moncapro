@@ -61,7 +61,7 @@ def expand_project(project: 'Project') -> 'Project':
     - Verweise auf einen Instance- oder Loop-Task zeigen danach auf die erste
       Instanz bzw. den ersten Zyklus (die Instanzen sind untereinander verkettet).
     - Alle übrigen Projektfelder bleiben erhalten.
-    - Ruhepausen gehören zur Terminplanung und werden in lib.schedule eingefügt.
+    - Ruhepausen gehören zur Terminplanung und werden in moncapro.schedule eingefügt.
 
     Gibt project unverändert zurück, wenn nichts zu expandieren ist.
     """

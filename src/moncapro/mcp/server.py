@@ -1,12 +1,12 @@
 """
-sproject MCP-Server
+moncapro MCP-Server
 ===================
 
-Stellt die Operationen aus lib/api.py (ProjectSession) als MCP-Werkzeuge bereit,
+Stellt die Operationen aus moncapro/api.py (ProjectSession) als MCP-Werkzeuge bereit,
 damit Claude Code, Claude Desktop oder ein Chatbot Projekte aufbauen und rechnen kann.
 
-    python -m mcp_server --http --port 8765    # HTTP: http://127.0.0.1:8765/mcp (Normalfall)
-    python -m mcp_server                       # stdio (nur für Skripte/Tests)
+    moncapro-mcp --http --port 8765        # HTTP: http://127.0.0.1:8765/mcp (Normalfall)
+    moncapro-mcp                               # stdio (nur für Skripte/Tests)
 
 Im Normalfall läuft genau ein Server per HTTP; Claude Code (.mcp.json) und die GUI
 (gui/server_link.py) sind Clients und teilen sich dessen Projekt. Die GUI erkennt
@@ -21,30 +21,29 @@ import sys
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, TypeVar, Union
 
-if __package__ in (None, ""):
-    # Direkter Skript-Aufruf (python mcp_server/server.py): Projekt-Root in den Suchpfad
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+try:
+    from mcp.server.fastmcp import Context, FastMCP
+except ImportError as exc:  # pragma: no cover
+    raise ImportError("Der MCP-Server braucht das Extra 'mcp': pip install \"moncapro[mcp]\"") from exc
 
-from mcp.server.fastmcp import Context, FastMCP
-
-from lib.api import ApiError, ProjectSession, switch_message
-from lib.exporters import EXPORTERS
-from lib.paths import PROJECT_ROOT, get_work_dir
+from moncapro.api import ApiError, ProjectSession, switch_message
+from moncapro.exporters import EXPORTERS
+from moncapro.paths import get_examples_dir, get_work_dir
 
 T = TypeVar("T")
 TaskId = Union[int, str]
 
-EXAMPLES_DIR = PROJECT_ROOT / "examples"
+EXAMPLES_DIR = get_examples_dir()
 
 INSTRUCTIONS = """\
-sproject plant Projekte mit Netzplantechnik (CPM), Ressourcen, Kalender und Kosten.
+moncapro plant Projekte mit Netzplantechnik (CPM), Ressourcen, Kalender und Kosten.
 Es gibt immer genau ein geöffnetes Projekt; alle Werkzeuge arbeiten darauf.
 
 Ablauf: new_project oder load_project → Tasks (add_task) → Abhängigkeiten (add_dependency)
 → optional Ressourcen/Personen (upsert_item) → validate → calculate → save_project.
 Große Mengen (z. B. eine ganze Excel-Liste) besser in einem Aufruf mit replace_project
 oder patch_project({"tasks": [...]}) übergeben. Das Format zeigt die Ressource
-sproject://schema; Vorlagen: list_examples / sproject://examples/<name>.
+moncapro://schema; Vorlagen: list_examples / moncapro://examples/<name>.
 
 Regeln des Formats:
 - Dauern als Text: "3d" (Arbeitstage), "4h", "30m", "2w"; reine Zahl = Tage.
@@ -71,7 +70,7 @@ def _quiet(func: Callable[[], T]) -> T:
         return func()
 
 
-SERVER_NAME = "sproject"
+SERVER_NAME = "moncapro"
 
 
 def _client_id(ctx: Context) -> int:
@@ -83,7 +82,7 @@ def _client_id(ctx: Context) -> int:
 
 
 def port_in_use(host: str, port: int) -> bool:
-    """True, wenn auf host:port schon etwas lauscht (z. B. ein laufender sproject-Server)."""
+    """True, wenn auf host:port schon etwas lauscht (z. B. ein laufender moncapro-Server)."""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.settimeout(0.5)
         return sock.connect_ex((host, port)) == 0
@@ -116,7 +115,7 @@ def build_server(session: Optional[ProjectSession] = None,
         if s.generation != before:
             switched_by[s.generation] = client
             if s.last_switch is not None and s.last_switch["generation"] == s.generation:
-                print(f"[sproject] {switch_message(s.last_switch)}", file=sys.stderr, flush=True)
+                print(f"[moncapro] {switch_message(s.last_switch)}", file=sys.stderr, flush=True)
         seen[client] = s.generation
         return result
 
@@ -130,7 +129,7 @@ def build_server(session: Optional[ProjectSession] = None,
 
     @mcp.tool()
     def load_project(ctx: Context, path: str) -> Dict[str, Any]:
-        """Öffnet eine sproject-JSON-Datei (absoluter oder zum Projekt-Root relativer Pfad)."""
+        """Öffnet eine moncapro-JSON-Datei (absoluter oder zum Arbeitsverzeichnis relativer Pfad)."""
         return run(ctx, lambda: s.load(_resolve(path)), guarded=False)
 
     @mcp.tool()
@@ -152,7 +151,7 @@ def build_server(session: Optional[ProjectSession] = None,
 
     @mcp.tool()
     def replace_project(ctx: Context, data: Dict[str, Any], base_revision: Optional[int] = None) -> Dict[str, Any]:
-        """Ersetzt das ganze Projekt durch data (Format wie die JSON-Datei, siehe sproject://schema).
+        """Ersetzt das ganze Projekt durch data (Format wie die JSON-Datei, siehe moncapro://schema).
         base_revision (optional): nur ersetzen, wenn der Stand seitdem unverändert ist."""
         return run(ctx, lambda: s.replace_project(data, base_revision), guarded=False)
 
@@ -265,16 +264,16 @@ def build_server(session: Optional[ProjectSession] = None,
     @mcp.tool()
     def list_examples() -> List[str]:
         """Pfade der Beispielprojekte (Vorlagen für Format und Struktur)."""
-        return [p.relative_to(PROJECT_ROOT).as_posix() for p in sorted(EXAMPLES_DIR.glob("*.json"))]
+        return [str(p) for p in sorted(EXAMPLES_DIR.glob("*.json"))]
 
     # --- Ressourcen ----------------------------------------------------
 
-    @mcp.resource("sproject://schema", mime_type="application/json")
+    @mcp.resource("moncapro://schema", mime_type="application/json")
     def schema() -> str:
         """JSON-Schema des Projektformats."""
         return json.dumps(ProjectSession.schema(), ensure_ascii=False, indent=1)
 
-    @mcp.resource("sproject://examples/{name}", mime_type="application/json")
+    @mcp.resource("moncapro://examples/{name}", mime_type="application/json")
     def example(name: str) -> str:
         """Beispielprojekt aus examples/ (name mit oder ohne .json)."""
         path = EXAMPLES_DIR / (name if name.endswith(".json") else f"{name}.json")
@@ -287,11 +286,11 @@ def build_server(session: Optional[ProjectSession] = None,
 
 def _resolve(path: str) -> Path:
     p = Path(path)
-    return p if p.is_absolute() or p.exists() else PROJECT_ROOT / p
+    return p if p.is_absolute() or p.exists() else get_work_dir() / p
 
 
 def main(argv: Optional[List[str]] = None) -> int:
-    parser = argparse.ArgumentParser(description="sproject MCP-Server")
+    parser = argparse.ArgumentParser(description="moncapro MCP-Server")
     parser.add_argument("--http", action="store_true", help="HTTP statt stdio (http://HOST:PORT/mcp)")
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8765)
@@ -300,13 +299,13 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     url = f"http://{args.host}:{args.port}/mcp"
     if args.http and port_in_use(args.host, args.port):
-        print(f"Port {args.port} ist belegt – läuft schon ein sproject-Server? ({url})", file=sys.stderr)
+        print(f"Port {args.port} ist belegt – läuft schon ein moncapro-Server? ({url})", file=sys.stderr)
         return 1
     if args.http:
-        print(f"sproject-Server: {url}\n"
+        print(f"moncapro-Server: {url}\n"
               f"Claude Code:     .mcp.json im Projektordner (Port 8765) oder "
-              f"claude mcp add --transport http sproject {url}\n"
-              f"GUI:             Server -> Mit sproject-Server verbinden ...\n"
+              f"claude mcp add --transport http moncapro {url}\n"
+              f"GUI:             Server -> Mit moncapro-Server verbinden ...\n"
               f"Beenden mit Strg+C", flush=True)
     session = ProjectSession()
     if args.project:

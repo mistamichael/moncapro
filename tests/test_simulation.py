@@ -4,10 +4,10 @@ Monte-Carlo-Simulation: Unsicherheiten aus duration_range, risk und Szenarien.
 
 import pytest
 
-from lib.models import Project, SimpleTask
-from lib.models.base import TaskRisk
-from lib.models.scenario import Scenario, ScenarioChange
-from lib.simulation import simulate, summary_rows
+from moncapro.models import Project, SimpleTask
+from moncapro.models.base import TaskRisk
+from moncapro.models.scenario import Scenario, ScenarioChange
+from moncapro.simulation import simulate, summary_rows
 
 START = "2026-03-02 08:00:00"     # Montag
 

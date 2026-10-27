@@ -17,10 +17,11 @@ import subprocess
 import sys
 from pathlib import Path
 
+from moncapro.paths import get_cfg_dir, get_examples_dir
+
 import pytest
 
-ROOT = Path(__file__).resolve().parent.parent
-EXAMPLES = sorted((ROOT / "examples").glob("*.json"))
+EXAMPLES = sorted(get_examples_dir().glob("*.json"))
 GOLDEN_DIR = Path(__file__).parent / "golden"
 UPDATE = os.environ.get("UPDATE_GOLDEN") == "1"
 
@@ -42,12 +43,12 @@ def _run_cli(example: Path, work_dir: Path) -> Path:
     project_file.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
 
     out_dir = work_dir / "out"
-    env = {**os.environ, "PV_CFG": str(ROOT / "cfg"), "PYTHONPATH": str(ROOT), "PYTHONIOENCODING": "utf-8"}
+    env = {**os.environ, "MONCAPRO_CFG": str(get_cfg_dir()), "PYTHONIOENCODING": "utf-8"}
     proc = subprocess.run(
-        [sys.executable, str(ROOT / "lib" / "sproject.py"),
+        [sys.executable, "-m", "moncapro",
          "--project", str(project_file),
          "--output-dir", str(out_dir),
-         "--cfg-dir", str(ROOT / "cfg"),
+         "--cfg-dir", str(get_cfg_dir()),
          "--export", "json,txt,md"],
         cwd=work_dir, env=env, capture_output=True, text=True, encoding="utf-8",
     )

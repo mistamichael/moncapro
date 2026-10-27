@@ -3,7 +3,7 @@ Pydantic models for sproject JSON structures
 =============================================
 
 Usage:
-    from lib.models import load_project
+    from moncapro.models import load_project
 
     project = load_project("examples/software_simple.json")
 """

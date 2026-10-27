@@ -61,7 +61,7 @@ class TaskBase(BaseModel):
     not_before: Optional[str] = None  # Frühester Start, "YYYY-MM-DD[ HH:MM]" (z. B. Materiallieferung)
     deadline: Optional[str] = None    # Spätestes Ende, "YYYY-MM-DD[ HH:MM]" (Datum ohne Uhrzeit = Tagesende)
     delay: Optional[str] = None       # Wartezeit vor dem Start (z. B. "2d" Trocknung, Lieferverzug)
-    # Unsicherheit für die Monte-Carlo-Simulation (lib/simulation.py)
+    # Unsicherheit für die Monte-Carlo-Simulation (moncapro/simulation.py)
     duration_range: Optional[List[str]] = None   # [Minimum, Maximum]; wahrscheinlichster Wert = duration
     risk: Optional["TaskRisk"] = None            # mit probability tritt eine Startverzögerung delay ein
 

@@ -4,23 +4,25 @@ Plotly-Charts: Figuren aus dem Schedule und HTML-Export (ohne Bildexport/Chrome)
 
 from pathlib import Path
 
+from moncapro.paths import get_cfg_dir, get_examples_dir
+
 import pytest
 
 pytest.importorskip("plotly")
 
-from lib.charts import build_figures, build_gantt_figure, write_html   # noqa: E402
-from lib.models import load_project                                      # noqa: E402
-from lib.schedule import build_schedule                                  # noqa: E402
+from moncapro.charts import build_figures, build_gantt_figure, write_html   # noqa: E402
+from moncapro.models import load_project                                      # noqa: E402
+from moncapro.schedule import build_schedule                                  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-EXAMPLES = sorted((ROOT / "examples").glob("*.json"))
+EXAMPLES = sorted(get_examples_dir().glob("*.json"))
 
 
 def _schedule(name: str):
-    project = load_project(ROOT / "examples" / f"{name}.json")
+    project = load_project(get_examples_dir() / f"{name}.json")
     if not project.project_start:
         project.project_start = "2026-03-02"
-    return build_schedule(project, cfg_dir=ROOT / "cfg")
+    return build_schedule(project, cfg_dir=get_cfg_dir())
 
 
 @pytest.mark.parametrize("example", EXAMPLES, ids=lambda p: p.stem)

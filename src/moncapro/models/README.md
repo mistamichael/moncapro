@@ -21,7 +21,7 @@ pip install pydantic
 ## Schnellstart
 
 ```python
-from lib import load_project
+from moncapro import load_project
 
 # Lade beliebige Projekt-JSON
 project = load_project("examples/software_simple.json")
@@ -72,7 +72,7 @@ project = load_project("examples/software_simple.json")
 ## Modul-Struktur
 
 ```
-lib/models/
+moncapro/models/
 ├── __init__.py           # Public API
 ├── base.py               # TaskBase - Basis für alle Tasks
 ├── tasks.py              # SimpleTask, InstanceTask, LoopTask, SubTask
@@ -87,7 +87,7 @@ lib/models/
 ### Beispiel 1: Projekt laden und Typ prüfen
 
 ```python
-from lib import load_project, PersonProject
+from moncapro import load_project, PersonProject
 
 project = load_project("examples/software_simple.json")
 
@@ -115,7 +115,7 @@ for person in project.persons:
 ### Beispiel 3: Tasks mit Zyklen
 
 ```python
-from lib import load_project, CycleProject
+from moncapro import load_project, CycleProject
 
 project = load_project("examples/pizzas.json")
 
@@ -132,7 +132,7 @@ if isinstance(project, CycleProject):
 ### Beispiel 4: Loop-Tasks analysieren
 
 ```python
-from lib import load_project, LoopProject
+from moncapro import load_project, LoopProject
 
 project = load_project("examples/erdaushub.json")
 
@@ -149,7 +149,7 @@ if isinstance(project, LoopProject):
 ### Beispiel 5: JSON Export
 
 ```python
-from lib import load_project, save_project
+from moncapro import load_project, save_project
 
 # Lade, modifiziere, speichere
 project = load_project("examples/software_simple.json")
@@ -167,7 +167,7 @@ json_str = project.model_dump_json(indent=2, by_alias=True, exclude_none=True)
 ### Beispiel 6: JSON Schema generieren
 
 ```python
-from lib import PersonProject
+from moncapro import PersonProject
 
 # Generiere JSON Schema
 schema = PersonProject.model_json_schema()
@@ -183,7 +183,7 @@ Pydantic validiert automatisch alle Daten:
 
 ```python
 from pydantic import ValidationError
-from lib import load_project
+from moncapro import load_project
 
 try:
     project = load_project("invalid.json")
@@ -268,7 +268,7 @@ tasks = data.get("tasks", [])   # Typ unbekannt
 ### Nachher (Pydantic):
 
 ```python
-from lib import load_project
+from moncapro import load_project
 
 # Type-safe, validiert
 project = load_project("project.json")

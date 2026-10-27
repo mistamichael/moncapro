@@ -2,12 +2,12 @@
 Fachliche Regeln der Berechnung (Expansion, Rückwärtsrechnung, Pausen, Festkosten).
 """
 
-from lib.cost_calculator import calculate_project_costs
-from lib.models import InstanceTask, Person, Project, Resource, SimpleTask
-from lib.models.resources import RestInterval
-from lib.work_calendar import WorkCalendar
-from lib.models.cpm import CPMCalculator
-from lib.schedule import build_schedule
+from moncapro.cost_calculator import calculate_project_costs
+from moncapro.models import InstanceTask, Person, Project, Resource, SimpleTask
+from moncapro.models.resources import RestInterval
+from moncapro.work_calendar import WorkCalendar
+from moncapro.models.cpm import CPMCalculator
+from moncapro.schedule import build_schedule
 
 
 def _cpm(project: Project):

@@ -66,7 +66,7 @@ class Project(BaseModel):
     actuals: Optional[Dict[str, Actual]] = None       # Task-ID → Ist-Stand
     baseline: Optional[Baseline] = None               # eingefrorener Plan
 
-    # Was-wäre-wenn-Varianten des Plans (lib/scenarios.py)
+    # Was-wäre-wenn-Varianten des Plans (moncapro/scenarios.py)
     scenarios: Optional[List[Scenario]] = None
 
     # Alle Task-Typen in einem Union (spezifischere zuerst)
@@ -96,7 +96,7 @@ class Project(BaseModel):
     def calculate_cpm(self, start_date: Union[str, datetime, None] = None,
                       cfg_dir: Optional[Path] = None) -> 'CPMResult':
         """
-        CPM-Berechnung für dieses Projekt (ohne Expansion – dafür lib.schedule.build_schedule).
+        CPM-Berechnung für dieses Projekt (ohne Expansion – dafür moncapro.schedule.build_schedule).
 
         Args:
             start_date: überschreibt project_start (str oder datetime)

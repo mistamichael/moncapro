@@ -170,3 +170,11 @@ cython_debug/
 
 # Versehentliche Windows-Umleitung "> nul" in Git Bash
 nul
+
+# moncapro
+/.venv
+/dist
+/data
+/work
+/log
+/results

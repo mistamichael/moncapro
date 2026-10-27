@@ -5,7 +5,7 @@ Project API
 Operationen auf einem Projekt für externe Werkzeuge (MCP-Server, Chatbot,
 Skripte) – ohne GUI. Alle Ein- und Ausgaben sind JSON-taugliche dicts/Listen.
 
-    from lib.api import ProjectSession
+    from moncapro.api import ProjectSession
 
     s = ProjectSession()
     s.new_project("Garage", project_start="2026-04-01")
@@ -47,7 +47,7 @@ def _same_id(a: Any, b: Any) -> bool:
 
 
 def backup_dir() -> Path:
-    """Ordner für Sicherungskopien ersetzter Projektstände ($PV_WORK/backup)."""
+    """Ordner für Sicherungskopien ersetzter Projektstände ($MONCAPRO_WORK/backup)."""
     return get_work_dir() / "backup"
 
 
@@ -401,7 +401,7 @@ class ProjectSession:
 
     def export(self, formats: Iterable[str], out_dir: Union[str, Path, None] = None,
                lang: str = "de") -> List[str]:
-        """Exportiert Reports. Formate: siehe lib.exporters.EXPORTERS."""
+        """Exportiert Reports. Formate: siehe moncapro.exporters.EXPORTERS."""
         formats = [f.strip().lower() for f in formats if f.strip()]
         unknown = [f for f in formats if f not in EXPORTERS]
         if unknown:

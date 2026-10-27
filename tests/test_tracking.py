@@ -4,13 +4,13 @@ Plan gegen Ist: Stichtag, Ist-Werte, Baseline.
 
 import pytest
 
-from lib.baseline import create_baseline
-from lib.models import Project, SimpleTask
-from lib.models.cpm import CPMCalculator
-from lib.models.tracking import Actual
-from lib.report_data import tracking_summary
-from lib.schedule import build_schedule
-from lib.work_calendar import WorkCalendar
+from moncapro.baseline import create_baseline
+from moncapro.models import Project, SimpleTask
+from moncapro.models.cpm import CPMCalculator
+from moncapro.models.tracking import Actual
+from moncapro.report_data import tracking_summary
+from moncapro.schedule import build_schedule
+from moncapro.work_calendar import WorkCalendar
 
 START = "2026-03-02 08:00:00"     # Montag
 

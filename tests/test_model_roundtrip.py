@@ -5,11 +5,13 @@ Laden → Speichern aller Beispiel-Projekte muss das JSON unverändert lassen.
 import json
 from pathlib import Path
 
+from moncapro.paths import get_examples_dir
+
 import pytest
 
-from lib.models import load_project, save_project
+from moncapro.models import load_project, save_project
 
-EXAMPLES = sorted((Path(__file__).resolve().parent.parent / "examples").glob("*.json"))
+EXAMPLES = sorted(get_examples_dir().glob("*.json"))
 
 
 @pytest.mark.parametrize("example", EXAMPLES, ids=lambda p: p.stem)

@@ -4,12 +4,12 @@ Ressourcenplanung: Personenkonflikte, Kapazitäten, Urlaub, Teilzeit, feste Term
 
 import pytest
 
-from lib.models import Person, Project, Resource, SimpleTask
-from lib.models.cpm import CPMCalculator
-from lib.models.resources import TimeRange, VacationEntry, WorkHoursOverride
-from lib.report_data import collect_deadline_violations
-from lib.time_axis import point_in_time
-from lib.work_calendar import WorkCalendar
+from moncapro.models import Person, Project, Resource, SimpleTask
+from moncapro.models.cpm import CPMCalculator
+from moncapro.models.resources import TimeRange, VacationEntry, WorkHoursOverride
+from moncapro.report_data import collect_deadline_violations
+from moncapro.time_axis import point_in_time
+from moncapro.work_calendar import WorkCalendar
 
 START = "2026-03-02 08:00:00"     # Montag
 

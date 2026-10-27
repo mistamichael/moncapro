@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "moncapro"
+dynamic = ["version"]
+description = "Critical path (CPM) project planning with Monte Carlo simulation, scenarios and MCP interface"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Michael Stangl" }]
+requires-python = ">=3.10"
+keywords = ["cpm", "critical-path", "project-planning", "scheduling", "monte-carlo", "gantt", "mcp"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business :: Scheduling",
+    "Typing :: Typed",
+]
+dependencies = [
+    "pydantic>=2.0.0",
+    "holidays>=0.93",
+]
+
+[project.optional-dependencies]
+excel = ["openpyxl>=3.0.0"]
+html = ["markdown>=3.0"]
+svg = ["requests>=2.31.0"]            # SVG-Export über die Kroki-API
+charts = ["plotly>=6.1", "kaleido>=1.0"]
+mcp = ["mcp>=1.26,<2"]                # v2 benennt FastMCP um (MCPServer) – Umstellung steht noch aus
+all = ["moncapro[excel,html,svg,charts,mcp]"]
+dev = ["moncapro[all]", "pytest>=9.0.0", "build", "twine"]
+
+[project.scripts]
+moncapro = "moncapro.cli:main"
+moncapro-mcp = "moncapro.mcp.server:main"
+
+[project.urls]
+Homepage = "https://github.com/mistamichael/moncapro"
+Issues = "https://github.com/mistamichael/moncapro/issues"
+
+[tool.hatch.version]
+path = "src/moncapro/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/moncapro"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

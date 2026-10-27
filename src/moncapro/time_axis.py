@@ -3,7 +3,7 @@ Time axis
 =========
 
 Umrechnung der CPM-Zeit (Arbeitstage seit Projektstart) in Zeitpunkte und
-Achsenbeschriftungen. Gemeinsam genutzt von den Plotly-Charts (lib/charts.py)
+Achsenbeschriftungen. Gemeinsam genutzt von den Plotly-Charts (moncapro/charts.py)
 und den matplotlib-Diagrammen der GUI.
 
 Die Achse ist linear in Arbeitstagen und wird mit Kalenderdaten des

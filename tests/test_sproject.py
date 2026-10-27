@@ -21,13 +21,13 @@ from pathlib import Path
 from datetime import datetime
 
 # Add lib to path
-sys.path.insert(0, str(Path(os.environ.get("PV_LIB", str(Path(__file__).parent.parent / "lib")))))
-sys.path.insert(0, str(Path(os.environ.get("PROJECT", str(Path(__file__).parent.parent)))))
 
-_EXAMPLES_DIR = Path(os.environ.get("PV_EXAMPLES", str(Path(__file__).parent.parent / "examples")))
-_CFG_DIR      = Path(os.environ.get("PV_CFG",      str(Path(__file__).parent.parent / "cfg")))
+from moncapro.paths import get_cfg_dir, get_examples_dir
 
-from lib.models import (
+_EXAMPLES_DIR = get_examples_dir()
+_CFG_DIR      = get_cfg_dir()
+
+from moncapro.models import (
     load_project, save_project,
     Project, SimpleProject, PersonProject, CycleProject, LoopProject,
     CPMCalculator,
@@ -256,7 +256,7 @@ class TestExcelExport(unittest.TestCase):
         except ImportError:
             self.skipTest("openpyxl nicht installiert")
 
-        from lib.excel_reports import export_cpm_to_xlsx
+        from moncapro.excel_reports import export_cpm_to_xlsx
 
         software_file = _EXAMPLES_DIR / 'software_simple.json'
 
@@ -296,7 +296,7 @@ class TestTxtExport(unittest.TestCase):
     """Tests für TXT-Export (inkl. netplan_table)."""
 
     def _make_project(self):
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
         return SimpleProject(
             project="Test TXT Export",
             project_start="2026-04-01",
@@ -310,7 +310,7 @@ class TestTxtExport(unittest.TestCase):
 
     def test_txt_export_creates_file(self):
         """Test: TXT-Export erzeugt Datei"""
-        from lib.txt_export import export_cpm_to_txt
+        from moncapro.txt_export import export_cpm_to_txt
 
         project = self._make_project()
         result = project.calculate_cpm()
@@ -331,7 +331,7 @@ class TestTxtExport(unittest.TestCase):
 
     def test_txt_export_contains_all_sections(self):
         """Test: TXT-Export enthält alle konfigurierten Sektionen"""
-        from lib.txt_export import export_cpm_to_txt
+        from moncapro.txt_export import export_cpm_to_txt
 
         project = self._make_project()
         result = project.calculate_cpm()
@@ -355,7 +355,7 @@ class TestTxtExport(unittest.TestCase):
 
     def test_txt_export_netplan_table_has_successors(self):
         """Test: netplan_table-Sektion enthält Nachfolger-Spalte"""
-        from lib.txt_export import export_cpm_to_txt
+        from moncapro.txt_export import export_cpm_to_txt
 
         project = self._make_project()
         result = project.calculate_cpm()
@@ -377,7 +377,7 @@ class TestTxtExport(unittest.TestCase):
 
     def test_txt_export_from_example(self):
         """Test: TXT-Export mit echtem Beispielprojekt"""
-        from lib.txt_export import export_cpm_to_txt
+        from moncapro.txt_export import export_cpm_to_txt
 
         tankdesign_file = _EXAMPLES_DIR / 'tankdesign.json'
 
@@ -412,7 +412,7 @@ class TestNetworkDiagram(unittest.TestCase):
     """Tests für Netzplan-Generierung."""
 
     def _make_result(self):
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
         project = SimpleProject(
             project="Network Test",
             project_start="2026-04-01",
@@ -520,7 +520,7 @@ class TestTaskValidation(unittest.TestCase):
 
     def test_task_duration_validation(self):
         """Test: Dauer-Validierung"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         valid_durations = ["10d", "5h", "30m", "2w"]
         for duration in valid_durations:
@@ -532,7 +532,7 @@ class TestTaskValidation(unittest.TestCase):
 
     def test_task_dependencies(self):
         """Test: Task-Abhängigkeiten (EA-Typ)"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         task = SimpleTask(
             id=1,
@@ -547,7 +547,7 @@ class TestTaskValidation(unittest.TestCase):
 
     def test_task_dependencies_aa(self):
         """Test: AA-Abhängigkeiten (Anfang-Anfang)"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         task = SimpleTask(
             id=1,
@@ -561,7 +561,7 @@ class TestTaskValidation(unittest.TestCase):
 
     def test_task_dependencies_ee(self):
         """Test: EE-Abhängigkeiten (Ende-Ende)"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         task = SimpleTask(
             id=1,
@@ -589,7 +589,7 @@ class TestEdgeCasesEmptyProjects(unittest.TestCase):
 
     def test_single_task_no_dependencies(self):
         """Test: Einzelner Task ohne Abhängigkeiten"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         project = SimpleProject(
             project="Single Task Project",
@@ -611,21 +611,21 @@ class TestEdgeCasesInvalidDurations(unittest.TestCase):
 
     def test_zero_duration_task(self):
         """Test: Task mit Dauer 0"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         task = SimpleTask(id=1, name="Zero Duration", duration="0d")
         self.assertEqual(task.to_days(), 0.0)
 
     def test_very_large_duration(self):
         """Test: Task mit sehr großer Dauer"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         task = SimpleTask(id=1, name="Long Task", duration="1000d")
         self.assertEqual(task.to_days(), 1000.0)
 
     def test_duration_with_different_units(self):
         """Test: Verschiedene Zeiteinheiten"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         task_days    = SimpleTask(id=1, name="Days",    duration="10d")
         task_hours   = SimpleTask(id=2, name="Hours",   duration="8h")
@@ -639,7 +639,7 @@ class TestEdgeCasesInvalidDurations(unittest.TestCase):
 
     def test_missing_duration_converts_to_zero(self):
         """Test: Fehlende Dauer wird als 0 behandelt"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         task = SimpleTask(id=1, name="No Duration", duration=None)
         self.assertEqual(task.to_days(), 0.0)
@@ -649,7 +649,7 @@ class TestEdgeCasesCircularDependencies(unittest.TestCase):
     """Tests für zyklische Abhängigkeiten – CPM muss mit ValueError abbrechen."""
 
     def _make_project(self, tasks):
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
         return SimpleProject(
             project="Test",
             project_start="2026-04-01",
@@ -734,7 +734,7 @@ class TestEdgeCasesInvalidReferences(unittest.TestCase):
 
     def test_dependency_on_nonexistent_task(self):
         """Test: Abhängigkeit auf nicht existierenden Task"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         project = SimpleProject(
             project="Missing Dependency",
@@ -752,7 +752,7 @@ class TestEdgeCasesInvalidReferences(unittest.TestCase):
 
     def test_duplicate_task_ids(self):
         """Test: Doppelte Task-IDs (tasks ist eine Liste → beide bleiben erhalten)"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         project = SimpleProject(
             project="Duplicate IDs",
@@ -802,7 +802,7 @@ class TestEdgeCasesCPMCalculation(unittest.TestCase):
 
     def test_disconnected_task_groups(self):
         """Test: Unverbundene Task-Gruppen"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         project = SimpleProject(
             project="Disconnected Groups",
@@ -822,7 +822,7 @@ class TestEdgeCasesCPMCalculation(unittest.TestCase):
 
     def test_multiple_start_tasks(self):
         """Test: Mehrere Start-Tasks (keine Abhängigkeiten)"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         project = SimpleProject(
             project="Multiple Starts",
@@ -845,7 +845,7 @@ class TestEdgeCasesCPMCalculation(unittest.TestCase):
 
     def test_long_critical_path(self):
         """Test: Langer kritischer Pfad (lineare Kette von 10 Tasks)"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         tasks = []
         for i in range(1, 11):
@@ -872,8 +872,8 @@ class TestEdgeCasesCycleExpansion(unittest.TestCase):
 
     def test_cycle_with_zero_order_volume(self):
         """Test: Zyklus mit Bestellvolumen 0"""
-        from lib.models.resources import Resource
-        from lib.models.tasks import InstanceTask
+        from moncapro.models.resources import Resource
+        from moncapro.models.tasks import InstanceTask
 
         project = Project(
             project="Zero Cycles",
@@ -892,8 +892,8 @@ class TestEdgeCasesCycleExpansion(unittest.TestCase):
 
     def test_cycle_with_one_instance(self):
         """Test: Zyklus mit nur einer Instanz"""
-        from lib.models.resources import Resource
-        from lib.models.tasks import InstanceTask
+        from moncapro.models.resources import Resource
+        from moncapro.models.tasks import InstanceTask
 
         project = Project(
             project="Single Cycle",
@@ -917,8 +917,8 @@ class TestEdgeCasesLoopExpansion(unittest.TestCase):
 
     def test_loop_with_minimal_setup(self):
         """Test: Loop-Projekt mit minimaler Konfiguration (SimpleTask, keine LoopTasks)"""
-        from lib.models.resources import Resource
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.resources import Resource
+        from moncapro.models.tasks import SimpleTask
 
         project = Project(
             project="Minimal Loop",
@@ -940,7 +940,7 @@ class TestEdgeCasesResourceValidation(unittest.TestCase):
 
     def test_negative_hourly_rate(self):
         """Test: Negativer Stundensatz wird akzeptiert (kein Validator vorhanden)"""
-        from lib.models.resources import Person
+        from moncapro.models.resources import Person
 
         person = Person(
             id="test",
@@ -952,7 +952,7 @@ class TestEdgeCasesResourceValidation(unittest.TestCase):
 
     def test_zero_hourly_rate(self):
         """Test: Stundensatz 0 ist gültig"""
-        from lib.models.resources import Person
+        from moncapro.models.resources import Person
 
         person = Person(
             id="intern",
@@ -964,7 +964,7 @@ class TestEdgeCasesResourceValidation(unittest.TestCase):
 
     def test_very_high_hourly_rate(self):
         """Test: Sehr hoher Stundensatz"""
-        from lib.models.resources import Person
+        from moncapro.models.resources import Person
 
         person = Person(
             id="expert",
@@ -976,7 +976,7 @@ class TestEdgeCasesResourceValidation(unittest.TestCase):
 
     def test_email_is_optional(self):
         """Test: email-Feld ist Optional (kann None sein)"""
-        from lib.models.resources import Person
+        from moncapro.models.resources import Person
 
         person_no_email = Person(id="p1", name="No Email", role="Dev", hourly_rate=80.0)
         self.assertIsNone(person_no_email.email)
@@ -993,7 +993,7 @@ class TestEdgeCasesEmptyStrings(unittest.TestCase):
 
     def test_empty_project_name(self):
         """Test: Leerer Projektname"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         project = SimpleProject(
             project="",
@@ -1004,14 +1004,14 @@ class TestEdgeCasesEmptyStrings(unittest.TestCase):
 
     def test_empty_task_name(self):
         """Test: Leerer Task-Name"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         task = SimpleTask(id=1, name="", duration="1d")
         self.assertEqual(task.name, "")
 
     def test_whitespace_only_task_name(self):
         """Test: Task-Name mit nur Whitespace"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         task = SimpleTask(id=1, name="   ", duration="1d")
         self.assertEqual(task.name, "   ")
@@ -1022,7 +1022,7 @@ class TestEdgeCasesCPMInfinityBug(unittest.TestCase):
 
     def test_no_infinity_in_cpm_results(self):
         """Test: CPM-Ergebnisse enthalten keine Infinity-Werte"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
         import math
 
         project = SimpleProject(
@@ -1045,7 +1045,7 @@ class TestEdgeCasesCPMInfinityBug(unittest.TestCase):
 
     def test_single_task_no_infinity(self):
         """Test: Ein einzelner Task hat keine Infinity-Werte"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
         import math
 
         project = SimpleProject(
@@ -1068,7 +1068,7 @@ class TestEdgeCasesComplexDependencies(unittest.TestCase):
 
     def test_task_with_many_dependencies(self):
         """Test: Task mit vielen Abhängigkeiten"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         tasks = [SimpleTask(id=i, name=f"Task {i}", duration="1d") for i in range(1, 11)]
         tasks.append(SimpleTask(
@@ -1094,7 +1094,7 @@ class TestEdgeCasesComplexDependencies(unittest.TestCase):
 
     def test_diamond_dependency_pattern(self):
         """Test: Diamant-Abhängigkeitsmuster (A -> B,C -> D)"""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
 
         project = SimpleProject(
             project="Diamond Pattern",
@@ -1146,7 +1146,7 @@ class TestCPMDependencyTypes(unittest.TestCase):
     # EA	Sequenz: T2 startet wenn T1 endet	T1(0→5) → T2(5→8) → T3(8→10)
     def test_ea_simple_chain(self):
         """EA (Ende-Anfang): klassische Sequenz T1→T2→T3."""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
         #
         #  T1(5d) ──EA──> T2(3d) ──EA──> T3(2d)
         #  FAZ=0  FEZ=5   FAZ=5  FEZ=8   FAZ=8  FEZ=10
@@ -1179,7 +1179,7 @@ class TestCPMDependencyTypes(unittest.TestCase):
     # AA	Paralleler Start: T2 beginnt mit T1	T1(0→8) ∥ T2(0→3), beide enden vor T3(8→10). T2 hat GP=5
     def test_aa_parallel_start(self):
         """AA (Anfang-Anfang): T2 startet gleichzeitig mit T1."""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
         #
         #  T1(8d) ──AA──> T2(3d)     beide starten bei FAZ=0
         #  T1     ──EA──> T3(2d)     T3 startet nach T1 (FAZ=8)
@@ -1216,7 +1216,7 @@ class TestCPMDependencyTypes(unittest.TestCase):
     # EE	Gleichzeitiges Ende: T2.FEZ=T1.FEZ	T1(0→8) ∥ T2(5→8, verschoben), dann T3(8→10)
     def test_ee_simultaneous_end(self):
         """EE (Ende-Ende): T2 wird so verschoben, dass es gleichzeitig mit T1 endet."""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
         #
         #  T1(8d) ──EE──> T2(3d)     T2.FEZ wird auf T1.FEZ=8 hochgezogen
         #  T1     ──EA──> T3(2d)     T3 startet nach T1 (FAZ=8)
@@ -1251,7 +1251,7 @@ class TestCPMDependencyTypes(unittest.TestCase):
     # AE	T2 endet wenn T1 startet	T3(0→5) → T1(5→10); T2(2→5) läuft parallel, endet bei T1.FAZ=5
     def test_ae_target_forced_to_end_before_predecessor_starts(self):
         """AE (Anfang-Ende): T2 muss enden bevor/wenn T1 startet."""
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
         #
         #  T1(5d) ──AE──> T2(3d)
         #  T0(5d) ──EA──> T1          T1 startet erst nach T0 (FAZ=5)
@@ -1287,7 +1287,7 @@ class TestCPMResultExportToDict(unittest.TestCase):
     """Tests für CPMResult.export_to_dict() – Struktur und Inhalte."""
 
     def _make_result(self):
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
         # Einfaches 3-Task Projekt: T1→T2, T1→T3 (T1 ist Vorgänger beider)
         project = SimpleProject(
             project="Export Test",
@@ -1364,7 +1364,7 @@ class TestNetworkCSVDetails(unittest.TestCase):
     """Tests für to_network_csv() – Successor-Spalte und Zahlenwerte."""
 
     def _make_result(self):
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
         #
         #  T1 ──EA──> T2 ──EA──> T4(end)
         #  T1 ──EA──> T3 ──EA──> T4(end)
@@ -1442,7 +1442,7 @@ class TestExcelExportContent(unittest.TestCase):
     """Tests für Excel-Export: Sheet-Inhalte, nicht nur Namen."""
 
     def _make_project_and_result(self):
-        from lib.models.tasks import SimpleTask
+        from moncapro.models.tasks import SimpleTask
         project = SimpleProject(
             project="Excel Content Test",
             project_start="2026-04-01",
@@ -1461,7 +1461,7 @@ class TestExcelExportContent(unittest.TestCase):
             import openpyxl
         except ImportError:
             self.skipTest("openpyxl nicht installiert")
-        from lib.excel_reports import export_cpm_to_xlsx
+        from moncapro.excel_reports import export_cpm_to_xlsx
 
         project, result = self._make_project_and_result()
         with tempfile.NamedTemporaryFile(suffix='.xlsx', delete=False) as tmp:
@@ -1492,7 +1492,7 @@ class TestExcelExportContent(unittest.TestCase):
             import openpyxl
         except ImportError:
             self.skipTest("openpyxl nicht installiert")
-        from lib.excel_reports import export_cpm_to_xlsx
+        from moncapro.excel_reports import export_cpm_to_xlsx
 
         project, result = self._make_project_and_result()
         with tempfile.NamedTemporaryFile(suffix='.xlsx', delete=False) as tmp:
@@ -1526,8 +1526,8 @@ class TestExcelExportContent(unittest.TestCase):
             import openpyxl
         except ImportError:
             self.skipTest("openpyxl nicht installiert")
-        from lib.excel_reports import export_cpm_to_xlsx
-        from lib.models.tasks import SimpleTask
+        from moncapro.excel_reports import export_cpm_to_xlsx
+        from moncapro.models.tasks import SimpleTask
 
         project = SimpleProject(
             project="Minimal", project_start="2026-04-01",

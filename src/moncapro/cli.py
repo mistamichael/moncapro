@@ -1,12 +1,11 @@
-#!/usr/bin/env python3
 """
-sproject CLI
+moncapro CLI
 ============
 
 Berechnet Projektdateien (CPM, Kalender, Kosten) und exportiert Reports.
 
-    python -m lib.sproject --project examples/tankdesign.json --export json,txt
-    python lib/sproject.py --project examples/tankdesign.json
+    moncapro --project tankdesign.json --export json,txt
+    python -m moncapro --project tankdesign.json
 """
 
 import argparse
@@ -18,19 +17,13 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Optional
 
-if __package__ in (None, ""):
-    # Direkter Skript-Aufruf (python lib/sproject.py): Paket 'lib' bekannt machen (PEP 366)
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-    import lib  # noqa: F401
-    __package__ = "lib"
-
 from .durations import format_time_value_auto
 from .export_config import load_labels
 from .exporters import EXPORTERS, ExportOptions, export_schedule
 from .baseline import create_baseline
 from .models import load_project, save_project
 from .models.cpm import CPMResult
-from .paths import get_results_dir
+from .paths import get_cfg_dir, get_data_dir, get_log_dir, get_results_dir
 from .report_data import deadline_warning_lines, tracking_summary
 from .scenarios import apply_scenario, compare_scenarios, comparison_rows, find_scenario
 from .schedule import build_schedule
@@ -38,12 +31,12 @@ from .simulation import simulate, summary_rows, top_critical
 
 
 def setup_logging(log_dir: Optional[Path] = None) -> logging.Logger:
-    """Logging in Datei ($PV_LOG oder ./log) und auf die Konsole."""
-    log_dir = log_dir or Path(os.environ.get("PV_LOG", "log"))
+    """Logging in Datei ($MONCAPRO_LOG oder ./log) und auf die Konsole."""
+    log_dir = log_dir or get_log_dir()
     log_dir.mkdir(parents=True, exist_ok=True)
-    log_file = log_dir / f"sproject_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+    log_file = log_dir / f"moncapro_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
 
-    logger = logging.getLogger("sproject")
+    logger = logging.getLogger("moncapro")
     logger.setLevel(logging.DEBUG)
 
     file_handler = logging.FileHandler(log_file, encoding="utf-8")
@@ -127,7 +120,7 @@ def _print_table(rows: List[List[str]]) -> None:
 
 def _parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="sproject - Projektplanung mit CPM, Ressourcen, Kalender und Reports",
+        description="moncapro - Projektplanung mit CPM, Ressourcen, Kalender und Reports",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Beispiele:
@@ -137,13 +130,13 @@ Beispiele:
     )
     parser.add_argument("--project", type=Path,
                         help="Projektdatei. Ohne Angabe: alle project*.json im data-Ordner.")
-    parser.add_argument("--data-dir", type=Path, default=Path(os.environ.get("PV_DATA", "data")),
-                        help="Verzeichnis mit Projektdateien (Standard: $PV_DATA oder 'data')")
-    parser.add_argument("--cfg-dir", type=Path, default=Path(os.environ.get("PV_CFG", "cfg")),
-                        help="Konfigurationsverzeichnis (Standard: $PV_CFG oder 'cfg')")
+    parser.add_argument("--data-dir", type=Path, default=get_data_dir(),
+                        help="Verzeichnis mit Projektdateien (Standard: $MONCAPRO_DATA oder 'data')")
+    parser.add_argument("--cfg-dir", type=Path, default=get_cfg_dir(),
+                        help="Konfigurationsverzeichnis (Standard: $MONCAPRO_CFG oder mitgeliefert)")
     parser.add_argument("--verbose", "-v", action="store_true", help="Ausführliche Ausgabe")
     parser.add_argument("--output-dir", type=Path,
-                        help="Ausgabeverzeichnis (Standard: $PV_RESULTS oder 'results')")
+                        help="Ausgabeverzeichnis (Standard: $MONCAPRO_RESULTS oder 'results')")
     parser.add_argument("--start-date", type=str,
                         help="Projektstart (YYYY-MM-DD), überschreibt project_start")
     parser.add_argument("--export", type=str, default="json",

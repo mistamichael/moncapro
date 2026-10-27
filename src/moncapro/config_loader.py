@@ -27,14 +27,11 @@ class ConfigLoader:
             config_path: Pfad zur Konfigurationsdatei (default: cfg/defaults.cfg)
         """
         if config_path is None:
-            # Suche nach cfg/defaults.cfg relativ zum Skript oder im aktuellen Verzeichnis
             config_path = get_cfg_dir() / "defaults.cfg"
-            if not config_path.exists():
-                config_path = Path("cfg") / "defaults.cfg"
 
         self.config_path = config_path
         self.config = configparser.ConfigParser()
-        self.cfg_dir = config_path.parent if config_path else Path("cfg")
+        self.cfg_dir = config_path.parent
         self._holidays_cache_dict: dict = {}  # Cache für Feiertage (Key: year_range)
 
         if config_path.exists():

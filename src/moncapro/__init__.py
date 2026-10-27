@@ -1,11 +1,11 @@
 """
-sproject library
-================
+moncapro
+=======
 
 Usage:
-    from lib import load_project, build_schedule
+    from moncapro import load_project, build_schedule
 
-    project = load_project("examples/software_simple.json")
+    project = load_project("software_simple.json")
     schedule = build_schedule(project)
     print(schedule.cpm.project_duration)
 """
@@ -39,7 +39,7 @@ from .work_calendar import WorkCalendar
 from .models.expander import generate_cycle_id, parse_cycle_id
 from .schedule import Schedule, build_schedule
 
-__version__ = "0.3.0"
+__version__ = "0.1.0"
 
 __all__ = [
     'load_project', 'save_project',

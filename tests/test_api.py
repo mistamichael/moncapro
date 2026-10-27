@@ -1,19 +1,21 @@
 """
-Tests für lib/api.py (ProjectSession) und den MCP-Server
+Tests für moncapro/api.py (ProjectSession) und den MCP-Server
 =========================================================
 """
 
 import asyncio
 from pathlib import Path
 
+from moncapro.paths import get_cfg_dir, get_examples_dir
+
 import pytest
 
-from lib.api import ApiError, ProjectSession
-from lib.models import load_project
-from lib.schedule import build_schedule
+from moncapro.api import ApiError, ProjectSession
+from moncapro.models import load_project
+from moncapro.schedule import build_schedule
 
 ROOT = Path(__file__).resolve().parent.parent
-EXAMPLES = sorted((ROOT / "examples").glob("*.json"))
+EXAMPLES = sorted(get_examples_dir().glob("*.json"))
 
 
 @pytest.fixture
@@ -115,7 +117,7 @@ def test_examples_lossless_and_same_result(example):
 
 
 def test_mcp_server_tools():
-    from mcp_server.server import build_server
+    from moncapro.mcp.server import build_server
 
     mcp = build_server(ProjectSession())
 
@@ -195,7 +197,7 @@ def test_switch_without_previous_project_or_with_invalid_data(tmp_path):
 def test_second_http_server_refuses_busy_port():
     import socket
 
-    from mcp_server.server import main, port_in_use
+    from moncapro.mcp.server import main, port_in_use
 
     with socket.socket() as sock:
         sock.bind(("127.0.0.1", 0))
