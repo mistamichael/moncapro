@@ -1,0 +1,15 @@
+Läufe | 300
+Plan (ohne Streuung) | 2026-04-07 17:00 (192.0h)
+Plan wird gehalten mit | 3%
+P50 (zu 50 % fertig bis) | 2026-04-13 16:22 (223.4h)
+P80 (zu 80 % fertig bis) | 2026-04-16 10:06 (241.1h)
+P90 (zu 90 % fertig bis) | 2026-04-17 09:27 (248.5h)
+Frühestes / spätestes Ende | 2026-03-31 10:51 (161.9h) / 2026-04-27 13:00 (300.0h)
+Szenario 'Alice eine Woche krank' eingetreten | 14%
+6 | Testing & QA | 100%
+7 | Deployment | 100%
+8 | Projektabschluss | 100%
+4 | Backend Entwicklung | 90%
+5 | Frontend Entwicklung | 90%
+1 | Projektinitialisierung | 76%
+2 | Requirements Analyse | 76%

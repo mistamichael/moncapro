@@ -16,7 +16,7 @@ The example projects demonstrate different features and use cases of moncapro. T
 | `hausbau.json`         | Single-family house build    | AA/EE dependencies                |
 | `erdaushub.json`       | Excavation                   | Parallel activities               |
 | `fassadenbau.json`     | Facade construction          | Section-by-section assembly       |
-| `software_simple.json` | Software development         | Persons, resources, costs         |
+| `software_simple.json` | Software development         | Persons, resources, costs, scenarios, simulation         |
 
 Pre-computed results: [doc/result_examples/](../result_examples/README.md).
 
@@ -313,7 +313,96 @@ In the resource list you can see:
 
 ---
 
-## 3. Other examples (short overview)
+## 3. software_simple.json - Scenarios and Monte Carlo simulation
+
+### Purpose
+Shows the "what if?" analysis: scenarios (`scenarios`) are compared against the base plan, and the Monte Carlo
+simulation draws random uncertainties (`duration_range`, `risk`, scenario `probability`) and returns
+probabilities instead of a single end date. Both are already part of `software_simple.json`.
+
+### Uncertainty on tasks
+
+| Task | Plan | `duration_range` | `risk` |
+| ---- | ---- | ---------------- | ------ |
+| 4 Backend development  | 40h | 32h – 72h | 20 % probability, +16h ("customer API still unstable") |
+| 5 Frontend development | 32h | 24h – 48h | – |
+| 6 Testing & QA         | 20h | 16h – 40h | – |
+
+```json
+{
+  "id": 4,
+  "name": "Backend Entwicklung",
+  "duration": "40h",
+  "duration_range": ["32h", "72h"],
+  "risk": {"probability": 0.2, "delay": "16h", "note": "API des Kunden noch instabil"}
+}
+```
+
+### Scenarios
+
+| Scenario | Change | `probability` |
+| -------- | ------ | ------------- |
+| Alice sick for a week  | `person: DEV1`, vacation 9-13 Mar | 0.15 |
+| Backend 50 % more work | `task: 4`, `duration_factor: 1.5` | - (comparison only) |
+| Acceptance by 27 Mar   | `task: 8`, `deadline: 2026-03-27` | - (comparison only) |
+
+```json
+{
+  "name": "Alice eine Woche krank",
+  "probability": 0.15,
+  "changes": [{"person": "DEV1", "vacation": [{"from": "2026-03-09", "to": "2026-03-13", "description": "krank"}]}]
+}
+```
+
+Without `probability` a scenario is only compared, it does not enter the simulation. (Names and descriptions in the
+JSON file are German.)
+
+### Scenario comparison
+
+```bash
+moncapro --project src/moncapro/examples/software_simple.json --scenarios
+moncapro --project src/moncapro/examples/software_simple.json --export scenarios   # HTML
+```
+
+| Scenario                 | End              | Duration | vs. base plan | Cost     | Deadlines missed |
+| ------------------------ | ---------------- | -------- | ------------- | -------- | ---------------- |
+| Base plan                | 2026-04-07 17:00 | 192 h    | ±0            | 13,960 € | 0 |
+| Alice sick for a week    | 2026-04-14 17:00 | 232 h    | +40 h         | 13,960 € | 0 |
+| Backend 50 % more work   | 2026-04-10 13:00 | 212 h    | +20 h         | 15,660 € | 0 |
+| Acceptance by 27 Mar     | 2026-04-07 17:00 | 192 h    | ±0            | 13,960 € | 1 |
+
+To calculate and export a single scenario as its own plan: `--scenario "Alice eine Woche krank"`.
+
+### Monte Carlo simulation
+
+```bash
+moncapro --project src/moncapro/examples/software_simple.json --simulate 300 --seed 1
+moncapro --project src/moncapro/examples/software_simple.json --export simulation --simulate 300 --seed 1
+```
+
+With `--seed` the result is reproducible. Typical result (300 runs, seed 1):
+
+| Metric | Value |
+| ------ | ----- |
+| Plan (no variation)               | 2026-04-07 17:00 (192 h) |
+| Plan is kept in                   | 3 % |
+| P50 / P80 / P90                   | 13 Apr / 16 Apr / 17 Apr |
+| Earliest / latest end             | 31 Mar / 27 Apr |
+| Scenario "Alice sick" occurred in | 14 % |
+| Most critical tasks               | 6, 7, 8 (100 %), 4, 5 (90 %), 1, 2 (76 %) |
+
+**How to read it:** the 192 h plan holds in only about 3 % of the runs. To commit with 80 % confidence, quote the
+P80 date (16 Apr). Criticality shows how often a task determines the end date - here development (4, 5) and
+everything after it. If a task's planned duration lies outside `duration_range`, the simulation uses the boundary
+and reports the task.
+
+Pre-computed results: [software_simple_scenarios.html](../result_examples/software_simple_scenarios.html),
+[software_simple_simulation.html](../result_examples/software_simple_simulation.html). Tested in
+[`tests/test_example_analysis.py`](../../tests/test_example_analysis.py).
+
+---
+
+## 4. Other examples (short overview)
 
 ### tankdesign.json - Classic project management
 **Features:**

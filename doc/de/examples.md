@@ -16,7 +16,7 @@ Die Beispielprojekte demonstrieren verschiedene Funktionen und Anwendungsfälle 
 | `hausbau.json`         | Einfamilienhaus-Bau        | AA/EE-Abhängigkeiten              |
 | `erdaushub.json`       | Erdaushub                  | Parallel laufende Tätigkeiten     |
 | `fassadenbau.json`     | Fassadenbau                | Abschnittweise Montage            |
-| `software_simple.json` | Software-Entwicklung       | Personen, Ressourcen, Kosten      |
+| `software_simple.json` | Software-Entwicklung       | Personen, Ressourcen, Kosten, Szenarien, Simulation      |
 
 Fertig berechnete Ergebnisse: [doc/result_examples/](../result_examples/README.md).
 
@@ -309,7 +309,95 @@ In der Resource List sieht man:
 
 ---
 
-## 3. Weitere Beispiele (Kurzübersicht)
+## 3. software_simple.json - Szenarien und Monte-Carlo-Simulation
+
+### Zweck
+Zeigt die „Was wäre wenn?“-Analyse: Szenarien (`scenarios`) werden gegen den Basisplan verglichen, die
+Monte-Carlo-Simulation würfelt Unsicherheiten (`duration_range`, `risk`, Szenario-`probability`) und liefert
+Wahrscheinlichkeiten statt eines einzelnen Endtermins. Beides steckt bereits in `software_simple.json`.
+
+### Unsicherheiten am Task
+
+| Task | Plan | `duration_range` | `risk` |
+| ---- | ---- | ---------------- | ------ |
+| 4 Backend Entwicklung  | 40h | 32h – 72h | 20 % Wahrscheinlichkeit, +16h („API des Kunden noch instabil“) |
+| 5 Frontend Entwicklung | 32h | 24h – 48h | – |
+| 6 Testing & QA         | 20h | 16h – 40h | – |
+
+```json
+{
+  "id": 4,
+  "name": "Backend Entwicklung",
+  "duration": "40h",
+  "duration_range": ["32h", "72h"],
+  "risk": {"probability": 0.2, "delay": "16h", "note": "API des Kunden noch instabil"}
+}
+```
+
+### Szenarien
+
+| Szenario | Änderung | `probability` |
+| -------- | -------- | ------------- |
+| Alice eine Woche krank   | `person: DEV1`, Urlaub 09.–13.03. | 0,15 |
+| Backend 50 % aufwendiger | `task: 4`, `duration_factor: 1.5` | – (nur Vergleich) |
+| Abnahme bis 27.03.       | `task: 8`, `deadline: 2026-03-27` | – (nur Vergleich) |
+
+```json
+{
+  "name": "Alice eine Woche krank",
+  "probability": 0.15,
+  "changes": [{"person": "DEV1", "vacation": [{"from": "2026-03-09", "to": "2026-03-13", "description": "krank"}]}]
+}
+```
+
+Ohne `probability` fließt ein Szenario nicht in die Simulation ein, es wird nur verglichen.
+
+### Szenario-Vergleich
+
+```bash
+moncapro --project src/moncapro/examples/software_simple.json --scenarios
+moncapro --project src/moncapro/examples/software_simple.json --export scenarios   # HTML
+```
+
+| Szenario                 | Ende             | Dauer | vs. Basisplan | Kosten   | Deadlines verfehlt |
+| ------------------------ | ---------------- | ----- | ------------- | -------- | ------------------ |
+| Basisplan                | 2026-04-07 17:00 | 192 h | ±0            | 13.960 € | 0 |
+| Alice eine Woche krank   | 2026-04-14 17:00 | 232 h | +40 h         | 13.960 € | 0 |
+| Backend 50 % aufwendiger | 2026-04-10 13:00 | 212 h | +20 h         | 15.660 € | 0 |
+| Abnahme bis 27.03.       | 2026-04-07 17:00 | 192 h | ±0            | 13.960 € | 1 |
+
+Ein einzelnes Szenario als eigenen Plan berechnen und exportieren: `--scenario "Alice eine Woche krank"`.
+
+### Monte-Carlo-Simulation
+
+```bash
+moncapro --project src/moncapro/examples/software_simple.json --simulate 300 --seed 1
+moncapro --project src/moncapro/examples/software_simple.json --export simulation --simulate 300 --seed 1
+```
+
+Mit `--seed` ist das Ergebnis reproduzierbar. Typisches Ergebnis (300 Läufe, Seed 1):
+
+| Kennzahl | Wert |
+| -------- | ---- |
+| Plan (ohne Streuung)               | 2026-04-07 17:00 (192 h) |
+| Plan wird gehalten mit             | 3 % |
+| P50 / P80 / P90                    | 13.04. / 16.04. / 17.04. |
+| Frühestes / spätestes Ende         | 31.03. / 27.04. |
+| Szenario „Alice krank“ eingetreten | 14 % |
+| Kritischste Tasks                  | 6, 7, 8 (100 %), 4, 5 (90 %), 1, 2 (76 %) |
+
+**Lesart:** Der Plan von 192 h ist nur in etwa 3 % der Läufe zu halten. Wer mit 80 % Sicherheit zusagen will,
+nennt den P80-Termin (16.04.). Die Kritikalität zeigt, wie oft ein Task den Endtermin bestimmt – hier die
+Entwicklung (4, 5) und alles danach. Liegt die geplante Dauer eines Tasks außerhalb von `duration_range`,
+verwendet die Simulation den Rand und meldet den Task.
+
+Fertige Ergebnisse: [software_simple_scenarios.html](../result_examples/software_simple_scenarios.html),
+[software_simple_simulation.html](../result_examples/software_simple_simulation.html). Getestet in
+[`tests/test_example_analysis.py`](../../tests/test_example_analysis.py).
+
+---
+
+## 4. Weitere Beispiele (Kurzübersicht)
 
 ### tankdesign.json - Klassisches Projektmanagement
 **Merkmale:**

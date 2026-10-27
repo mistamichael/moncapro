@@ -1,0 +1,5 @@
+Szenario | Ende | Dauer | vs. Basisplan | Kosten | Deadlines verfehlt
+Basisplan | 2026-04-07 17:00 | 192.0h | ±0 | 13.960,00 € | 0
+Alice eine Woche krank | 2026-04-14 17:00 | 232.0h | +40.0h | 13.960,00 € | 0
+Backend 50 % aufwendiger | 2026-04-10 13:00 | 212.0h | +20.0h | 15.660,00 € | 0
+Abnahme bis 27.03. | 2026-04-07 17:00 | 192.0h | ±0 | 13.960,00 € | 1
