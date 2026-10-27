@@ -12,33 +12,19 @@ variablen umlenken:
     MONCAPRO_WORK     Arbeitsdateien, Default für neue Projekte (Standard: .)
     MONCAPRO_LOG      Logdateien (Standard: ./log)
     MONCAPRO_DATA     Eingabe-Projektdateien der CLI (Standard: ./data)
-
-Die früheren PV_*-Variablen (PV_CFG, PV_RESULTS, ...) gelten weiter als Fallback.
 """
 
 import os
-import warnings
 from pathlib import Path
 from typing import Optional
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 
-_WARNED: set = set()
-
 
 def env_path(name: str) -> Optional[Path]:
-    """Wert von MONCAPRO_<name>, ersatzweise PV_<name> (veraltet); None wenn nicht gesetzt."""
+    """Wert von MONCAPRO_<name>; None wenn nicht gesetzt."""
     value = os.environ.get(f"MONCAPRO_{name}")
-    if value:
-        return Path(value)
-    legacy = os.environ.get(f"PV_{name}")
-    if legacy:
-        if name not in _WARNED:
-            _WARNED.add(name)
-            warnings.warn(f"PV_{name} ist veraltet, bitte MONCAPRO_{name} verwenden",
-                          DeprecationWarning, stacklevel=2)
-        return Path(legacy)
-    return None
+    return Path(value) if value else None
 
 
 def get_cfg_dir() -> Path:
