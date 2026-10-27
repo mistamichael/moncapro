@@ -32,7 +32,7 @@ excel = ["openpyxl>=3.0.0"]
 html = ["markdown>=3.0"]
 svg = ["requests>=2.31.0"]            # SVG-Export über die Kroki-API
 charts = ["plotly>=6.1", "kaleido>=1.0"]
-mcp = ["mcp>=1.26,<2"]                # v2 benennt FastMCP um (MCPServer) – Umstellung steht noch aus
+mcp = ["mcp>=1.26,<3"]                # v2 benennt FastMCP um (MCPServer) – Umstellung steht noch aus
 all = ["moncapro[excel,html,svg,charts,mcp]"]
 dev = ["moncapro[all]", "pytest>=9.0.0", "build", "twine"]
 
