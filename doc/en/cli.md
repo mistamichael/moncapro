@@ -6,7 +6,7 @@
 
 ### Process a single project
 
-Pass a project file (e.g. `newproj.json`). Without `--project`, all `project*.json` files in the data
+Pass a project file (e.g. `newproj.json`). Without `--project`, all `project*.json` files (or, if there are none, all `*.json` files) in the data
 folder (`./data`, or `$MONCAPRO_DATA`) are processed. `python -m moncapro` works the same as `moncapro`.
 The example projects ship with the package (`src/moncapro/examples/` in the repository,
 `moncapro.paths.get_examples_dir()` when installed).

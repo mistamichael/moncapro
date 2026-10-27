@@ -6,7 +6,7 @@
 
 ### Einzelnes Projekt verarbeiten
 
-Gib eine Projektdatei an (z. B. `newproject.json`). Ohne `--project` werden alle `project*.json` im
+Gib eine Projektdatei an (z. B. `newproject.json`). Ohne `--project` werden alle `project*.json` (gibt es keine: alle `*.json`) im
 Datenordner (`./data` bzw. `$MONCAPRO_DATA`) verarbeitet. `python -m moncapro` entspricht `moncapro`.
 Die Beispielprojekte liegen im Paket (`src/moncapro/examples/` im Repository,
 `moncapro.paths.get_examples_dir()` nach der Installation).

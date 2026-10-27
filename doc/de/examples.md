@@ -1,8 +1,11 @@
 # Beispielprojekte in moncapro
 
+> Teil der [moncapro-Dokumentation](../../README.md#documentation). English: [doc/en/examples.md](../en/examples.md)
+
 ## Übersicht
 
-Die Beispielprojekte demonstrieren verschiedene Funktionen und Anwendungsfälle von moncapro:
+Die Beispielprojekte demonstrieren verschiedene Funktionen und Anwendungsfälle von moncapro. Sie liegen im Paket in
+[`src/moncapro/examples/`](../../src/moncapro/examples) (nach der Installation: `moncapro.paths.get_examples_dir()`):
 
 | Datei                  | Beschreibung               | Besonderheiten                    |
 | ---------------------- | -------------------------- | --------------------------------- |
@@ -337,9 +340,8 @@ In der Resource List sieht man:
 ## Ausführung aller Beispiele
 
 ```bash
-# Alle Beispiele auf einmal verarbeiten
-cd bin
-run_test.bat
+# Alle Beispiele auf einmal verarbeiten (ohne --project verarbeitet die CLI jede *.json im Ordner)
+moncapro --data-dir src/moncapro/examples --export xlsx
 
 # Ergebnisse in results/ Ordner:
 results/hausbau.xlsx      # AA/EE Abhängigkeiten
@@ -369,7 +371,7 @@ results/fassadenbau.xlsx  # PersonProject (Tage)
 
 ## Weiterführende Dokumentation
 
-- [dependency_types.md](DEPENDENCY_TYPES.md) - Detaillierte Erklärung aller Abhängigkeitstypen
+- [dependency_types.md](dependency_types.md) - Detaillierte Erklärung aller Abhängigkeitstypen
 - [cfg/defaults.cfg](../../src/moncapro/cfg/defaults.cfg) - Projekt-Standards
 
 ---
