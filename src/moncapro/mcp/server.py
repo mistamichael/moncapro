@@ -22,7 +22,8 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, TypeVar, Union
 
 try:
-    from mcp.server.fastmcp import Context, FastMCP
+    from mcp.server.mcpserver import Context, MCPServer
+    from mcp.server.mcpserver.exceptions import ToolError
 except ImportError as exc:  # pragma: no cover
     raise ImportError("Der MCP-Server braucht das Extra 'mcp': pip install \"moncapro[mcp]\"") from exc
 
@@ -88,11 +89,10 @@ def port_in_use(host: str, port: int) -> bool:
         return sock.connect_ex((host, port)) == 0
 
 
-def build_server(session: Optional[ProjectSession] = None,
-                 host: str = "127.0.0.1", port: int = 8765) -> FastMCP:
+def build_server(session: Optional[ProjectSession] = None) -> MCPServer:
     """MCP-Server für eine ProjectSession."""
     s = session or ProjectSession()
-    mcp = FastMCP(SERVER_NAME, instructions=INSTRUCTIONS, host=host, port=port)
+    mcp = MCPServer(SERVER_NAME, instructions=INSTRUCTIONS)
     seen: Dict[int, int] = {}           # MCP-Sitzung (Client) → zuletzt gesehener Wechselzähler
     switched_by: Dict[int, int] = {}    # Wechselzähler → MCP-Sitzung, die gewechselt hat
 
@@ -106,12 +106,15 @@ def build_server(session: Optional[ProjectSession] = None,
         if (guarded and last is not None and switch is not None and switch["generation"] > last
                 and switched_by.get(switch["generation"]) != client):
             seen[client] = s.generation
-            raise ApiError("Achtung: Das Projekt wurde inzwischen von einem anderen Client (z. B. der GUI) "
-                           f"ersetzt. {switch_message(switch)}. Dieser Aufruf wurde NICHT ausgeführt – "
-                           "prüfe mit get_overview und rufe ihn dann erneut auf, "
-                           "oder lade die Sicherung mit load_project.")
+            raise ToolError("Achtung: Das Projekt wurde inzwischen von einem anderen Client (z. B. der GUI) "
+                            f"ersetzt. {switch_message(switch)}. Dieser Aufruf wurde NICHT ausgeführt – "
+                            "prüfe mit get_overview und rufe ihn dann erneut auf, "
+                            "oder lade die Sicherung mit load_project.")
         before = s.generation
-        result = _quiet(func)
+        try:
+            result = _quiet(func)
+        except ApiError as exc:
+            raise ToolError(str(exc)) from exc
         if s.generation != before:
             switched_by[s.generation] = client
             if s.last_switch is not None and s.last_switch["generation"] == s.generation:
@@ -310,7 +313,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     session = ProjectSession()
     if args.project:
         _quiet(lambda: session.load(args.project))
-    build_server(session, host=args.host, port=args.port).run("streamable-http" if args.http else "stdio")
+    server = build_server(session)
+    if args.http:
+        server.run("streamable-http", host=args.host, port=args.port)
+    else:
+        server.run("stdio")
     return 0
 
 

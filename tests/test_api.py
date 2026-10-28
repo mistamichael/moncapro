@@ -126,15 +126,15 @@ def test_mcp_server_tools():
         assert {"new_project", "add_task", "add_dependency", "calculate", "save_project",
                 "get_revision", "get_state"} <= names
         await mcp.call_tool("new_project", {"name": "X", "project_start": "2026-04-01"})
-        _, a = await mcp.call_tool("add_task", {"task": {"name": "A", "duration": "2"}})
-        _, b = await mcp.call_tool("add_task", {"task": {"name": "B", "duration": "1d"}})
-        assert a["result"] == {"id": 1, "name": "A", "duration": "2d"}   # gespeicherter Task samt ID
-        await mcp.call_tool("add_dependency", {"predecessor": a["result"]["id"], "successor": b["result"]["id"]})
-        _, result = await mcp.call_tool("calculate", {})
-        return result
+        a = await mcp.call_tool("add_task", {"task": {"name": "A", "duration": "2"}})
+        b = await mcp.call_tool("add_task", {"task": {"name": "B", "duration": "1d"}})
+        assert a.structured_content["result"] == {"id": 1, "name": "A", "duration": "2d"}  # gespeicherter Task samt ID
+        await mcp.call_tool("add_dependency", {"predecessor": a.structured_content["result"]["id"],
+                                                "successor": b.structured_content["result"]["id"]})
+        return await mcp.call_tool("calculate", {})
 
     result = asyncio.run(run())
-    assert result["result"]["duration_days"] == 3.0
+    assert result.structured_content["result"]["duration_days"] == 3.0
 
 
 def test_revision_and_conflict(session):
