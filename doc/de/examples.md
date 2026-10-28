@@ -432,28 +432,31 @@ Fertige Ergebnisse: [software_simple_scenarios.html](../result_examples/software
 moncapro --data-dir src/moncapro/examples --export xlsx
 
 # Ergebnisse in results/ Ordner:
-results/hausbau.xlsx      # AA/EE Abhängigkeiten
-results/erdaushub.xlsx    # Loop-Tasks mit Pausen (Stunden!)
-results/tankdesign.xlsx   # Standard EA
-results/pizzas.xlsx       # Instance-Tasks (Stunden!)
-results/fassadenbau.xlsx  # PersonProject (Tage)
+results/hausbau.xlsx         # AA/EE Abhängigkeiten
+results/erdaushub.xlsx       # Loop-Tasks mit Pausen (Stunden!)
+results/tankdesign.xlsx      # Standard EA
+results/pizzas.xlsx          # Instance-Tasks (Stunden!)
+results/fassadenbau.xlsx     # PersonProject (Tage)
+results/software_simple.xlsx # Szenarien und Monte-Carlo-Simulation
 ```
 
 ---
 
 ## Vergleich der Beispiele
 
-| Feature | hausbau | erdaushub | tankdesign | pizzas | fassadenbau |
-|---------|---------|-----------|------------|--------|-------------|
-| **Abhängigkeitstypen** | EA, AA, EE | EA | EA | EA | EA |
-| **Loop-Tasks** | ❌ | ✅ | ❌ | ❌ | ❌ |
-| **Pausen** | ❌ | ✅ Auto | ❌ | ❌ | ❌ |
-| **Wochenenden** | ✅ | ✅ Blocker | ✅ | ✅ | ✅ |
-| **Personen** | ❌ | ✅ 3 | ❌ | ❌ | ✅ 3 |
-| **Maschinen** | ❌ | ✅ 3 | ❌ | ✅ 1 | ✅ 2 |
-| **Gantt-Auflösung** | Tage | **Stunden** | Tage | **Stunden** | Tage |
-| **Projektdauer** | 33d | 12.4d | 70d | 1.2h | 6.8d |
-| **Anzahl Tasks** | 10 | 174 | 8 | 4 | 5 |
+| Feature | hausbau | erdaushub | tankdesign | pizzas | fassadenbau | software_simple |
+|---------|---------|-----------|------------|--------|-------------|------------------|
+| **Abhängigkeitstypen** | EA, AA, EE | EA | EA | EA | EA | EA |
+| **Loop-Tasks** | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| **Pausen** | ❌ | ✅ Auto | ❌ | ❌ | ❌ | ❌ |
+| **Wochenenden** | ✅ | ✅ Blocker | ✅ | ✅ | ✅ | ✅ |
+| **Personen** | ❌ | ✅ 3 | ❌ | ❌ | ✅ 3 | ✅ 3 |
+| **Maschinen** | ❌ | ✅ 3 | ❌ | ✅ 1 | ✅ 2 | ❌ |
+| **Szenarien** | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| **Monte-Carlo-Simulation** | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| **Gantt-Auflösung** | Tage | **Stunden** | Tage | **Stunden** | Tage | Stunden |
+| **Projektdauer** | 33d | 12.4d | 70d | 1.2h | 6.8d | 192h |
+| **Anzahl Tasks** | 10 | 174 | 8 | 4 | 5 | 8 |
 
 ---
 

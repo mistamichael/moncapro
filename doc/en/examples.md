@@ -437,28 +437,31 @@ Pre-computed results: [software_simple_scenarios.html](../result_examples/softwa
 moncapro --data-dir src/moncapro/examples --export xlsx
 
 # Results in the results/ folder:
-results/hausbau.xlsx      # AA/EE dependencies
-results/erdaushub.xlsx    # Loop tasks with breaks (hours!)
-results/tankdesign.xlsx   # Standard EA
-results/pizzas.xlsx       # Instance tasks (hours!)
-results/fassadenbau.xlsx  # PersonProject (days)
+results/hausbau.xlsx         # AA/EE dependencies
+results/erdaushub.xlsx       # Loop tasks with breaks (hours!)
+results/tankdesign.xlsx      # Standard EA
+results/pizzas.xlsx          # Instance tasks (hours!)
+results/fassadenbau.xlsx     # PersonProject (days)
+results/software_simple.xlsx # Scenarios and Monte Carlo simulation
 ```
 
 ---
 
 ## Comparison of the examples
 
-| Feature | hausbau | erdaushub | tankdesign | pizzas | fassadenbau |
-|---------|---------|-----------|------------|--------|-------------|
-| **Dependency types** | EA, AA, EE | EA | EA | EA | EA |
-| **Loop tasks** | ❌ | ✅ | ❌ | ❌ | ❌ |
-| **Breaks** | ❌ | ✅ Auto | ❌ | ❌ | ❌ |
-| **Weekends** | ✅ | ✅ Blocker | ✅ | ✅ | ✅ |
-| **Persons** | ❌ | ✅ 3 | ❌ | ❌ | ✅ 3 |
-| **Machines** | ❌ | ✅ 3 | ❌ | ✅ 1 | ✅ 2 |
-| **Gantt resolution** | Days | **Hours** | Days | **Hours** | Days |
-| **Project duration** | 33d | 12.4d | 70d | 1.2h | 6.8d |
-| **Number of tasks** | 10 | 174 | 8 | 4 | 5 |
+| Feature | hausbau | erdaushub | tankdesign | pizzas | fassadenbau | software_simple |
+|---------|---------|-----------|------------|--------|-------------|------------------|
+| **Dependency types** | EA, AA, EE | EA | EA | EA | EA | EA |
+| **Loop tasks** | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| **Breaks** | ❌ | ✅ Auto | ❌ | ❌ | ❌ | ❌ |
+| **Weekends** | ✅ | ✅ Blocker | ✅ | ✅ | ✅ | ✅ |
+| **Persons** | ❌ | ✅ 3 | ❌ | ❌ | ✅ 3 | ✅ 3 |
+| **Machines** | ❌ | ✅ 3 | ❌ | ✅ 1 | ✅ 2 | ❌ |
+| **Scenarios** | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| **Monte Carlo simulation** | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| **Gantt resolution** | Days | **Hours** | Days | **Hours** | Days | Hours |
+| **Project duration** | 33d | 12.4d | 70d | 1.2h | 6.8d | 192h |
+| **Number of tasks** | 10 | 174 | 8 | 4 | 5 | 8 |
 
 ---
 
