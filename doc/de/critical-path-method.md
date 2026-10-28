@@ -57,20 +57,25 @@ Auf der Basis eigener Erfahrungen oder der Kenntnisse erfahrener Mitarbeiter sch
 Wenn Sie unsicher über Ihre Schätzungen sind, können Sie die Drei-Zeiten-Methode (auch Drei-Punkt-Schätzung genannt) anwenden, mit der sich eine realistischere Schätzung ermitteln lässt. 
 
 Bei der Drei-Zeiten-Methode müssen für jede Aufgabe drei Zeitschätzungen angegeben werden, die auf vorherigen Erfahrungen oder bestmöglichen Schätzungen beruhen. Der Zeitbedarf wird anhand der folgenden Werte berechnet: 
-
+```
 a = Minimalschätzung (Best Case)
 m = Wahrscheinlichste Schätzung (Most Likely Case)
 b = Maximalschätzung (Worst Case) 
+```
 
 Diese drei Formelwerte bestimmen den bestmöglichen, den wahrscheinlichsten und den ungünstigsten Fall. 
 
 Nachdem Sie diese Werte festgelegt haben, können Sie diese in zwei verschiedenen Formeln verwenden. Die erste Formel berechnet die mittlere Dauer, bei welcher der wahrscheinlichste Wert eine starke Gewichtung bekommt. Die Formel steht unten. „E“ steht für die Schätzung (engl. Estimate) und 4 und 6 stehen für die herkömmliche Methode, bei der mehr Gewichtung auf den realistischsten Wert gelegt wird. 
 
+```
 E = (a + 4m + b) / 6
+```
 
 Die zweite Möglichkeit ist die Verwendung der oben genannten Werte in der so genannten Dreiecksverteilung. Der wesentliche Unterschied zur ersten Möglichkeit besteht darin, dass diese Methode nicht mehr Gewichtung auf den wahrscheinlichsten Wert legt. Die Formel steht unten. „E“ steht für die Schätzung (engl. Estimate) und 3 für die herkömmliche Methode.
 
+```
 E = (a + m + b)/3
+```
 
 ### Schritt 5: Identifizieren des kritischen Pfads 
 Darstellung des kritischen Pfads im Netzplan
@@ -125,7 +130,7 @@ Ein ähnliches Konzept ist die kritische Kette (engl. Critical Chain), deren Zie
 
 Oben wurde beschrieben, wie unerwarteten Änderungen im Laufe eines Projekts den kritischen Pfad beeinträchtigen können. Aber selbst wenn die Dinge ständig im Fluss sind, können Sie trotzdem die Abweichung vom ursprünglichen Projektzeitplan ermitteln und nachvollziehen, ob und wie sie sich auf das Endprojekt auswirken.
 
-- *Flexibilität und Einschätzung von Verzögerungen*
+*Flexibilität und Einschätzung von Verzögerungen*
 
 Eine Terminplanung, die auf der Grundlage der Methode des kritischen Pfads erstellt wurde, enthält naturgemäß viele Schwankungen, denn die Zeitberechnungen erfolgen auf den bestmöglichen Schätzungen. Wenn bei der Zeitangabe für die Erfüllung einer Aufgabe ein Fehler unterlaufen ist, kann dies zur Änderung des gesamten kritischen Pfads führen. Es kann auch sein, dass Sie aufgrund von Ressourcenengpässen absichtlich bestimmte Projektaktivitäten verschieben.
 
@@ -142,29 +147,24 @@ Statt handgezeichneter Netzplandiagramme gibt es heute eine Anzahl von Softwarep
 
 Um zu erklären, wie man ein Netzwerkdiagramm zeichnet, hat Bennett ein Beispielprojekt mit acht Aufgaben erstellt:
 
-    Projekt: Entwurf eines Tanks. Projektdauer; 10 Tage. Projektbeginn: Sofort.
 
-    Bau des Fundaments (25 Tage) und Auswahl des Tank-Lieferanten (8 Tage) können beginnen, sobald der Entwurf des Tanks abgeschlossen ist.
-    Herstellung der Bauteile des Tanks (10 Tage) kann beginnen, sobald der Tank-Lieferant ausgewählt ist.
+    **Projekt**: Entwurf eines Tanks. Projektdauer; 10 Tage. Projektbeginn: Sofort.
 
-    Anlieferung das Tanks an den Standort (4 Tage) kann beginnen, sobald die Bauteile fertiggestellt sind.
-    
-    Zeichnungen für die Installation (3 Tage) können beginnen, sobald der Tank-Lieferant ausgewählt ist.
-    
-    Errichtung des Tanks (15 Tage) kann beginnen, sobald der Tank am Standort angeliefert ist die, die Zeichnungen für die Installation vorliegen und das Fundament fertiggestellt ist.
-    
-    Testläufe und Inbetriebnahme des Tanks (4 Tage) können beginnen, sobald der Tank errichtet ist.
-    
-    Nach den Testläufen und der Inbetriebnahme des Tanks ist das Projekt beendet.
-     
+    1. Bau des Fundaments (25 Tage) und Auswahl des Tank-Lieferanten (8 Tage) können beginnen, sobald der Entwurf des Tanks abgeschlossen ist.
+    2. Herstellung der Bauteile des Tanks (10 Tage) kann beginnen, sobald der Tank-Lieferant ausgewählt ist.
+    3. Anlieferung das Tanks an den Standort (4 Tage) kann beginnen, sobald die Bauteile fertiggestellt sind.
+    4. Zeichnungen für die Installation (3 Tage) können beginnen, sobald der Tank-Lieferant ausgewählt ist.
+    5. Errichtung des Tanks (15 Tage) kann beginnen, sobald der Tank am Standort angeliefert ist die, die Zeichnungen für die Installation vorliegen und das Fundament fertiggestellt ist.
+    6. Testläufe und Inbetriebnahme des Tanks (4 Tage) können beginnen, sobald der Tank errichtet ist.
+    7. Nach den Testläufen und der Inbetriebnahme des Tanks ist das Projekt beendet.
 
 Um den kritischen Pfad zu bestimmen, müssen Sie zuerst ein Netzplandiagramm zeichnen.
 
 Und so funktioniert es:
 
-    Zeichnen Sie einen Kasten mit ihrer ersten Aktivität (Entwurf des Tanks). Tragen Sie die Zeitdauer in Tagen ein (10 Tage).
-    Als Nächstes zeichnen Sie Kästen für die nächsten Aktivitäten (Erstellung des Fundaments, Auswahl des Tank-Lieferanten). Zeigen Sie vom Entwurf des Tanks ausgehend die Abfolge der Vorgänge durch Pfeile an.
-    Zeichnen Sie nach demselben Muster Kästen für die anderen Aktivitäten und Pfeile, um anzuzeigen, wann eine Aktivität beginnen kann.
+    - Zeichnen Sie einen Kasten mit ihrer ersten Aktivität (Entwurf des Tanks). Tragen Sie die Zeitdauer in Tagen ein (10 Tage).
+    - Als Nächstes zeichnen Sie Kästen für die nächsten Aktivitäten (Erstellung des Fundaments, Auswahl des Tank-Lieferanten). Zeigen Sie vom Entwurf des Tanks ausgehend die Abfolge der Vorgänge durch Pfeile an.
+    - Zeichnen Sie nach demselben Muster Kästen für die anderen Aktivitäten und Pfeile, um anzuzeigen, wann eine Aktivität beginnen kann.
  
 
 Mithilfe des fertigen Netzplandiagramms können Sie jetzt den kritischen Pfad bestimmen. Zur Erinnerung: Der kritische Pfad ist die Dauer des längsten Pfads im Netzplan und nicht der Pfad mit den meisten Kästen (Knoten).
@@ -178,12 +178,12 @@ Die Vorwärtsterminierung/Rückwärtsterminierung ist eine andere Methode, um de
 
 Die Vorwärtsrechnung/Rückwärtsrechnung kann auch notwendig sein, wenn Sie die frühesten oder die spätesten Anfangszeitpunkte oder Endzeitpunkte eines Vorgangs bestimmen müssen. Oder wenn Sie feststellen müssen, wie viel Puffer es bei den einzelnen Vorgängen gibt.
 
-Bevor Sie die Methode der Vorwärtsterminierung/Rückwärtsterminierung anwenden, hier einige wichtige Grundbegriffe:
+Bevor Sie die Methode der Vorwärtsterminierung/Rückwärtsterminierung anwenden, hier einige wichtige **Grundbegriffe**:
 
-    Frühester Anfangszeitpunkt (FAZ): Der früheste Zeitpunkt, an dem eine Aktivität beginnen kann, sobald die vorangehenden Aktivitäten beendet sind.
-    Frühester Endzeitpunkt (FEZ): Der früheste Anfangszeitpunkt plus die Zeit, die zur Erfüllung der Aktivität benötigt wird (der früheste Zeitpunkt, an dem eine Aktivität abgeschlossen sein kann).
-    Spätester Endzeitpunkt (SEZ): Der späteste Zeitpunkt, an dem eine Aktivität abgeschlossen werden kann, ohne das gesamte Projekt zu verzögern.
-    Spätester Anfangszeitpunkt (SAZ): Der späteste Zeitpunkt des Abschlusses minus die Zeit, die zur Erfüllung der Aktivität benötigt wird.
+    1. Frühester Anfangszeitpunkt **(FAZ)**: Der früheste Zeitpunkt, an dem eine Aktivität beginnen kann, sobald die vorangehenden Aktivitäten beendet sind.
+    2. Frühester Endzeitpunkt **(FEZ)**: Der früheste Anfangszeitpunkt plus die Zeit, die zur Erfüllung der Aktivität benötigt wird (der früheste Zeitpunkt, an dem eine Aktivität abgeschlossen sein kann).
+    3. Spätester Endzeitpunkt **(SEZ)**: Der späteste Zeitpunkt, an dem eine Aktivität abgeschlossen werden kann, ohne das gesamte Projekt zu verzögern.
+    4. Spätester Anfangszeitpunkt **(SAZ)**: Der späteste Zeitpunkt des Abschlusses minus die Zeit, die zur Erfüllung der Aktivität benötigt wird.
 
 Verwenden Sie bei der Anwendung der Vorwärts-/Rückwärtsrechnung die folgende Legende für Ihr Netzplandiagramm (PZ steht für Pufferzeit, mehr dazu im nächsten Abschnitt):
 
@@ -203,8 +203,9 @@ Geben Sie als FAZ für die erste Aufgabe 0 ein. Bei allen anderen Aufgaben ist d
 
 Der FEZ wird wie folgt berechnet:
 
+```
 FEZ = FAZ + Dauer (Knotenzeit)
-
+```
 Beim Entwurf des Tanks ist der FAZ 0 und der FEZ ist 10 (10 + Dauer von 0). Außerdem steht fest, dass der FAZ für die Auswahl des Tanklieferanten 10 und der FEZ 18 beträgt (10 + Dauer von 8). Nehmen Sie auf die gleiche Weise die Berechnungen für das gesamte Netzplandiagramm vor.
 Rückwärtsrechnung: Formel für die spätesten Anfangs- und Endzeitpunkte
 
@@ -214,14 +215,15 @@ Bei der Rückwärtsrechnung geben Sie für die letzte Aufgabe als spätesten End
 
 Der SAZ wird wie folgt berechnet:
 
+```
 SAZ = SEZ – Dauer (Knotenzeit)
+```
 
 Bei den Testläufen und der Inbetriebnahme des Tanks ist der SEZ 54 und der SAZ ist 50 (54 minus Dauer von 4). Für die Errichtung des Tanks ist der SEZ ebenfalls 50 und der SAZ ist 35 (50 minus Dauer von 15). Nehmen Sie auf die gleiche Weise die Berechnungen für das gesamte Netzplandiagramm vor.
 
 Wenn Sie die Rückwärtsterminierung korrekt vorgenommen haben, hat der späteste Anfangszeitpunkt SAZ der ersten Aktivität (Aktivität 1) den Wert 0.
 
 Die folgende Grafik zeigt die Vorwärts- und Rückwärtsterminierung:
-
 
  
 Zwei Regeln für die Vorwärtsterminierung und Rückwärtsterminierung im Rahmen der Projektplanung
@@ -236,10 +238,11 @@ Nachdem Sie die früheste Anfangszeit (FAZ) und späteste Anfangszeit (SAZ) für
 Der Puffer ist bei einem Vorgang die Zeit zwischen der frühesten und der spätesten Anfangszeit. Kritische Aktivitäten, d. h. Vorgänge auf dem kritischen Pfad, haben keinerlei Puffer.
 
 In der Vorwärts- und Rückwärtsterminierung lässt sich der Puffer mit zwei Formeln berechnen:
-
+```
 Puffer = SEZ - FEZ
 
 Puffer = SAZ - FAZ
+```
 
 Diese Formeln helfen Ihnen, die Pufferzeit von Vorgängen zu berechnen, wenn Sie bei der PMP-Prüfung danach gefragt werden. Wenn Sie nicht sicher sind, welche Vorgänge auf dem kritischen Pfad liegen, denken Sie daran, kann die Pufferzeit aufschlussreich sein, denn der Puffer von Vorgängen auf dem kritischen Pfad ist immer gleich Null.
 
@@ -258,20 +261,20 @@ meist auf dem kritischen Pfad.
 
 Hier sind die wichtigsten Begriffe der Methode des kritischen Pfads, die Sie für die PMP-Prüfung kennen müssen:
 
-    Methode des kritischen Pfads (engl. Critical Path Method, abgekürzt CPM): Die Methode des kritischen Pfads ist eine schrittweise Methode im Projektmanagement, mit der bei der Prozessplanung kritische und nichtkritische Aufgaben identifiziert werden, um Terminkonflikte und zeitliche Engpässe zu vermeiden.
-    Critical Path DRAG (Devaux’s Removed Activity Gauge): Die Zeitdauer, die ein Vorgang auf dem kritischen Pfad zur Gesamtdauer des Projektes hinzufügt. Oder die Zeitdauer, um welche die Gesamtdauer reduziert würde, wenn die Dauer eines Vorgangs auf dem kritischen Pfad auf Null reduziert würde.
-    Kritizitäts-Index: Dieser Begriff aus der Risikoanalyse zeigt, wie oft sich eine bestimmte Aufgabe auf dem kritischen Pfad befand. Aufgaben mit einem hohen Kritizitäts-Index haben eine höhere Wahrscheinlichkeit, Verzögerungen im Projekt zu erzeugen, da sie wahrscheinlicher auf dem kritischen Pfad liegen.
-    Frühester Anfangszeitpunkt (FAZ): Der früheste Zeitpunkt, zu dem eine Aktivität beginnen kann, nachdem die davon abhängigen vorherigen Aufgaben beendet wurden.
-    Frühester Endzeitpunkt (FEZ): Der früheste Anfangszeitpunkt einer Aktivität plus die Zeit, die zu ihrer Beendigung erforderlich ist.
-    Spätester Endzeitpunkt (SEZ): Der späteste Zeitpunkt, an dem eine Aktivität beendet werden kann, ohne das gesamte Projekt zu verzögern.
-    Spätester Anfangszeitpunkt (SAZ): Der späteste Endzeitpunkt einer Aktivität minus die Zeit, die zu ihrer Beendigung erforderlich ist.
-    Gesamtpuffer: Die Zeitdauer, um die sich der früheste Anfangszeitpunkt eines Vorgangs verschieben lässt, ohne dass es zu einer Verzögerung des gesamten Projekts kommt.
-    Freier Puffer: Die Zeitdauer, um die sich ein Vorgang verschieben lässt, ohne dass es zu einer Verzögerung des frühesten Anfangszeitpunkts einer nachfolgenden Aktivität kommt.
-    Vorwärtsrechnung oder Vorwärtskalkulation: Methode, mit der die frühesten Anfangs- oder Endzeitpunkte von Vorgängen auf dem kritischen Pfad berechnet werden.
-    Rückwärtsrechnung oder Rückwärtskalkulation: Methode, mit der die spätesten Anfangs- oder Endzeitpunkte von Vorgängen auf dem kritischen Pfad berechnet werden.
-    Netzplandiagramm: Schematische Darstellung der Beziehungen zwischen Vorgängen innerhalb des Projektes. Der Verlauf wird dabei stets von links nach rechts gezeichnet, um die Reihenfolge anzuzeigen.
-    Netzplananalyse: Herunterbrechen eines komplexen Projektes in einzelne Bestandteile (Aktivitäten, Dauer etc.) als Projektstrukturplan, bei dem Abhängigkeiten und Verhältnisse untereinander gezeigt werden.
+  - **Methode des kritischen Pfads (engl. Critical Path Method, abgekürzt CPM)**: Die Methode des kritischen Pfads ist eine schrittweise Methode im Projektmanagement, mit der bei der Prozessplanung kritische und nichtkritische Aufgaben identifiziert werden, um Terminkonflikte und zeitliche Engpässe zu vermeiden.
+  - **Critical Path DRAG (Devaux’s Removed Activity Gauge)**: Die Zeitdauer, die ein Vorgang auf dem kritischen Pfad zur Gesamtdauer des Projektes hinzufügt. Oder die Zeitdauer, um welche die Gesamtdauer reduziert würde, wenn die Dauer eines Vorgangs auf dem kritischen Pfad auf Null reduziert würde.
+  - **Kritizitäts-Index**: Dieser Begriff aus der Risikoanalyse zeigt, wie oft sich eine bestimmte Aufgabe auf dem kritischen Pfad befand. Aufgaben mit einem hohen Kritizitäts-Index haben eine höhere Wahrscheinlichkeit, Verzögerungen im Projekt zu erzeugen, da sie wahrscheinlicher auf dem kritischen Pfad liegen.
+  - **Frühester Anfangszeitpunkt (FAZ)**: Der früheste Zeitpunkt, zu dem eine Aktivität beginnen kann, nachdem die davon abhängigen vorherigen Aufgaben beendet wurden.
+  - **Frühester Endzeitpunkt (FEZ)**: Der früheste Anfangszeitpunkt einer Aktivität plus die Zeit, die zu ihrer Beendigung erforderlich ist.
+  - **Spätester Endzeitpunkt (SEZ)**: Der späteste Zeitpunkt, an dem eine Aktivität beendet werden kann, ohne das gesamte Projekt zu verzögern.
+  - **Spätester Anfangszeitpunkt (SAZ)**: Der späteste Endzeitpunkt einer Aktivität minus die Zeit, die zu ihrer Beendigung erforderlich ist.
+  - **Gesamtpuffer**: Die Zeitdauer, um die sich der früheste Anfangszeitpunkt eines Vorgangs verschieben lässt, ohne dass es zu einer Verzögerung des gesamten Projekts kommt.
+  - **Freier Puffer**: Die Zeitdauer, um die sich ein Vorgang verschieben lässt, ohne dass es zu einer Verzögerung des frühesten Anfangszeitpunkts einer nachfolgenden Aktivität kommt.
+  - **Vorwärtsrechnung oder Vorwärtskalkulation**: Methode, mit der die frühesten Anfangs- oder Endzeitpunkte von Vorgängen auf dem kritischen Pfad berechnet werden.
+  - **Rückwärtsrechnung oder Rückwärtskalkulation**: Methode, mit der die spätesten Anfangs- oder Endzeitpunkte von Vorgängen auf dem kritischen Pfad berechnet werden.
+  - **Netzplandiagramm**: Schematische Darstellung der Beziehungen zwischen Vorgängen innerhalb des Projektes. Der Verlauf wird dabei stets von links nach rechts gezeichnet, um die Reihenfolge anzuzeigen.
+  - **Netzplananalyse**: Herunterbrechen eines komplexen Projektes in einzelne Bestandteile (Aktivitäten, Dauer etc.) als Projektstrukturplan, bei dem Abhängigkeiten und Verhältnisse untereinander gezeigt werden.
 
-
+Die vollständigen Angaben finden Sie unter 
 
 https://de.smartsheet.com/critical-path-method

@@ -57,20 +57,25 @@ Based on your own experience or the knowledge of experienced staff, estimate how
 If you are unsure about your estimates, you can use the three-point estimating technique (also known as the three-time estimate) to arrive at a more realistic estimate.
 
 The three-point estimating technique requires three time estimates for each task, based on previous experience or best-guess estimates. The time required is calculated using the following values:
-
+```
 a = optimistic estimate (best case)
 m = most likely estimate (most likely case)
 b = pessimistic estimate (worst case)
+```
 
 These three formula values determine the best-case, most likely, and worst-case scenarios.
 
 Once you have determined these values, you can use them in two different formulas. The first formula calculates the average duration, giving the most likely value a strong weighting. The formula is shown below. "E" stands for the estimate, and 4 and 6 represent the conventional method, which places more weight on the most realistic value.
 
+```
 E = (a + 4m + b) / 6
+```
 
 The second option is to use the values above in what is known as the triangular distribution. The key difference from the first option is that this method does not place additional weight on the most likely value. The formula is shown below. "E" stands for the estimate, and 3 represents the conventional method.
 
+```
 E = (a + m + b) / 3
+```
 
 ### Step 5: Identify the critical path
 
@@ -141,28 +146,23 @@ Instead of hand-drawn network diagrams, there are now a number of project manage
 
 To explain how to draw a network diagram, Bennett created a sample project with eight tasks:
 
-    Project: Design a tank. Project duration: 10 days. Project start: immediately.
+    **Project**: Design a tank. Project duration: 10 days. Project start: immediately.
 
-    Pour foundation (25 days) and select tank supplier (8 days) can start once the tank design is complete.
-    Manufacture tank components (10 days) can start once the tank supplier has been selected.
-
-    Deliver the tank to the site (4 days) can start once the components are complete.
-
-    Drawings for installation (3 days) can start once the tank supplier has been selected.
-
-    Erect the tank (15 days) can start once the tank has been delivered to the site, the installation drawings are available, and the foundation is complete.
-
-    Testing and commissioning the tank (4 days) can start once the tank is erected.
-
-    The project is complete once testing and commissioning are done.
+    1. Pour foundation (25 days) and select tank supplier (8 days) can start once the tank design is complete.
+    2. Manufacture tank components (10 days) can start once the tank supplier has been selected.
+    3. Deliver the tank to the site (4 days) can start once the components are complete.
+    4. Drawings for installation (3 days) can start once the tank supplier has been selected.
+    5. Erect the tank (15 days) can start once the tank has been delivered to the site, the installation drawings are available, and the foundation is complete.
+    6. Testing and commissioning the tank (4 days) can start once the tank is erected.
+    7. The project is complete once testing and commissioning are done.
 
 To determine the critical path, you must first draw a network diagram.
 
 Here's how it works:
 
-    Draw a box for your first activity (design the tank). Enter the duration in days (10 days).
-    Next, draw boxes for the following activities (pour foundation, select tank supplier). Use arrows to show the sequence of activities starting from the tank design.
-    Follow the same pattern to draw boxes for the other activities and arrows to indicate when an activity can begin.
+    - Draw a box for your first activity (design the tank). Enter the duration in days (10 days).
+    - Next, draw boxes for the following activities (pour foundation, select tank supplier). Use arrows to show the sequence of activities starting from the tank design.
+    - Follow the same pattern to draw boxes for the other activities and arrows to indicate when an activity can begin.
 
 With the completed network diagram, you can now determine the critical path. Remember: the critical path is the duration of the longest path in the network diagram, not the path with the most boxes (nodes).
 
@@ -176,12 +176,12 @@ Forward/backward pass scheduling is another method for determining the critical 
 
 The forward/backward pass may also be necessary when you need to determine the earliest or latest start or finish times of an activity, or when you need to determine how much slack exists for individual activities.
 
-Before applying the forward/backward pass method, here are a few key terms:
+Before applying the forward/backward pass method, here are a few key **terms**:
 
-    Earliest start (ES): The earliest point in time an activity can begin, once the preceding activities are complete.
-    Earliest finish (EF): The earliest start time plus the time needed to complete the activity (the earliest point in time an activity can be finished).
-    Latest finish (LF): The latest point in time an activity can be completed without delaying the entire project.
-    Latest start (LS): The latest finish time minus the time needed to complete the activity.
+    1. Earliest start **(ES)**: The earliest point in time an activity can begin, once the preceding activities are complete.
+    2. Earliest finish **(EF)**: The earliest start time plus the time needed to complete the activity (the earliest point in time an activity can be finished).
+    3. Latest finish **(LF)**: The latest point in time an activity can be completed without delaying the entire project.
+    4. Latest start **(LS)**: The latest finish time minus the time needed to complete the activity.
 
 When applying the forward/backward pass, use the following legend for your network diagram:
 
@@ -201,8 +201,9 @@ Enter 0 as the ES for the first task. For all other tasks, the ES is identical t
 
 The EF is calculated as follows:
 
+```
 EF = ES + duration (node time)
-
+```
 For designing the tank, the ES is 0 and the EF is 10 (10 + duration of 0). It also follows that the ES for selecting the tank supplier is 10 and the EF is 18 (10 + duration of 8). Perform the same calculations for the entire network diagram.
 
 ### Backward Pass: Formula for the Latest Start and Finish Times
@@ -213,7 +214,9 @@ For the backward pass, enter the same value for the last task's latest finish (L
 
 The LS is calculated as follows:
 
+```
 LS = LF - duration (node time)
+```
 
 For testing and commissioning the tank, the LF is 54 and the LS is 50 (54 minus a duration of 4). For erecting the tank, the LF is also 50 and the LS is 35 (50 minus a duration of 15). Perform the same calculations for the entire network diagram.
 
@@ -232,10 +235,11 @@ Once you have entered the earliest start (ES) and latest start (LS) for each act
 Slack for an activity is the time between the earliest and latest start time. Critical activities, i.e. activities on the critical path, have zero slack.
 
 In the forward and backward pass, slack can be calculated using two formulas:
-
+```
 Slack = LF - EF
 
 Slack = LS - ES
+```
 
 These formulas help you calculate the slack of activities. If you're unsure which activities are on the critical path, remember that slack can be revealing, since the slack of activities on the critical path is always zero.
 
@@ -254,18 +258,20 @@ under uncertainty.
 
 Here are the most important terms of the critical path method:
 
-    Critical Path Method (CPM): A step-by-step project management method used to identify critical and non-critical tasks during process planning in order to avoid scheduling conflicts and time bottlenecks.
-    Critical Path DRAG (Devaux's Removed Activity Gauge): The amount of time an activity on the critical path adds to the overall project duration. Or the amount of time the overall duration would be reduced if the duration of an activity on the critical path were reduced to zero.
-    Criticality index: A term from risk analysis that shows how often a particular task was on the critical path. Tasks with a high criticality index are more likely to cause project delays, since they are more likely to be on the critical path.
-    Earliest start (ES): The earliest point in time an activity can begin, after the activities it depends on have been completed.
-    Earliest finish (EF): The earliest start time of an activity plus the time required to complete it.
-    Latest finish (LF): The latest point in time an activity can be completed without delaying the entire project.
-    Latest start (LS): The latest finish time of an activity minus the time required to complete it.
-    Total slack: The amount of time an activity's earliest start can be delayed without delaying the overall project.
-    Free slack: The amount of time an activity can be delayed without delaying the earliest start of a successor activity.
-    Forward pass: Method used to calculate the earliest start or finish times of activities on the critical path.
-    Backward pass: Method used to calculate the latest start or finish times of activities on the critical path.
-    Network diagram: Schematic representation of the relationships between activities within a project. The flow is always drawn from left to right to indicate the sequence.
-    Network analysis: Breaking down a complex project into individual components (activities, duration, etc.) as a work breakdown structure, showing dependencies and relationships between them.
+  - **Critical Path Method (CPM)**: A step-by-step project management method used to identify critical and non-critical tasks during process planning in order to avoid scheduling conflicts and time bottlenecks.
+  - **Critical Path DRAG (Devaux's Removed Activity Gauge)**: The amount of time an activity on the critical path adds to the overall project duration. Or the amount of time the overall duration would be reduced if the duration of an activity on the critical path were reduced to zero.
+  - **Criticality index**: A term from risk analysis that shows how often a particular task was on the critical path. Tasks with a high criticality index are more likely to cause project delays, since they are more likely to be on the critical path.
+  - **Earliest start (ES)**: The earliest point in time an activity can begin, after the activities it depends on have been completed.
+  - **Earliest finish (EF)**: The earliest start time of an activity plus the time required to complete it.
+  - **Latest finish (LF)**: The latest point in time an activity can be completed without delaying the entire project.
+  - **Latest start (LS)**: The latest finish time of an activity minus the time required to complete it.
+  - **Total slack**: The amount of time an activity's earliest start can be delayed without delaying the overall project.
+  - **Free slack**: The amount of time an activity can be delayed without delaying the earliest start of a successor activity.
+  - **Forward pass**: Method used to calculate the earliest start or finish times of activities on the critical path.
+  - **Backward pass**: Method used to calculate the latest start or finish times of activities on the critical path.
+  - **Network diagram**: Schematic representation of the relationships between activities within a project. The flow is always drawn from left to right to indicate the sequence.
+  - **Network analysis**: Breaking down a complex project into individual components (activities, duration, etc.) as a work breakdown structure, showing dependencies and relationships between them.
+
+Full details at
 
 https://de.smartsheet.com/critical-path-method
