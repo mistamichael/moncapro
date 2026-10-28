@@ -74,12 +74,15 @@ def _quiet(func: Callable[[], T]) -> T:
 SERVER_NAME = "moncapro"
 
 
-def _client_id(ctx: Context) -> int:
-    """Kennung des aufrufenden Clients (MCP-Sitzung); 0 außerhalb einer Anfrage (direkte Aufrufe)."""
+def _client_id(ctx: Context) -> Union[str, int]:
+    """Kennung des aufrufenden Clients (MCP-Sitzung); 0 außerhalb einer Anfrage oder bei stdio
+    (dort gibt es ohnehin nur einen Client je Serverprozess, der Schutz greift nur über HTTP)."""
     try:
-        return id(ctx.session)
+        headers = ctx.headers
     except ValueError:
         return 0
+    session_id = headers.get("mcp-session-id") if headers else None
+    return session_id if session_id is not None else 0
 
 
 def port_in_use(host: str, port: int) -> bool:
@@ -93,8 +96,8 @@ def build_server(session: Optional[ProjectSession] = None) -> MCPServer:
     """MCP-Server für eine ProjectSession."""
     s = session or ProjectSession()
     mcp = MCPServer(SERVER_NAME, instructions=INSTRUCTIONS)
-    seen: Dict[int, int] = {}           # MCP-Sitzung (Client) → zuletzt gesehener Wechselzähler
-    switched_by: Dict[int, int] = {}    # Wechselzähler → MCP-Sitzung, die gewechselt hat
+    seen: Dict[Union[str, int], int] = {}           # MCP-Sitzung (Client) → zuletzt gesehener Wechselzähler
+    switched_by: Dict[int, Union[str, int]] = {}    # Wechselzähler → MCP-Sitzung, die gewechselt hat
 
     def run(ctx: Context, func: Callable[[], T], guarded: bool = True) -> T:
         """
