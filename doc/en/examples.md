@@ -464,7 +464,7 @@ results/fassadenbau.xlsx  # PersonProject (days)
 
 ## Further documentation
 
-- [dependency_types.md](../de/dependency_types.md) (German) - Detailed explanation of all dependency types
+- [dependency-types.md](dependency-types.md) - Detailed explanation of all dependency types
 - [cfg/defaults.cfg](../../src/moncapro/cfg/defaults.cfg) - Project defaults
 
 ---

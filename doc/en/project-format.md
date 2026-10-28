@@ -165,4 +165,4 @@ for `src/moncapro/examples/software_simple.json`:
 
 ![Criticality](../img/criticality_en.svg)
 
-Details and how to read the charts (in German): [doc/de/termine-und-ist.md](../de/termine-und-ist.md). Example: `src/moncapro/examples/software_simple.json`.
+Details and how to read the charts: [doc/en/actuals-and-baseline.md](actuals-and-baseline.md). Example: `src/moncapro/examples/software_simple.json`.

@@ -6,7 +6,8 @@ ohne moncapro zu installieren. Am schnellsten: die `.md`-Berichte anklicken und 
 
 > English: pre-computed results of the example projects, to look at without installing moncapro.
 > Markdown files render directly on GitHub/Gitea; clicking an HTML file there shows only its source –
-> download HTML and XLSX files and open them locally.
+> download HTML and XLSX files and open them locally. Chart walkthrough:
+> [doc/en/actuals-and-baseline.md](../en/actuals-and-baseline.md).
 
 ## So schaut man sie an
 
