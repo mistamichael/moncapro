@@ -75,6 +75,11 @@ E = (a + m + b)/3
 ### Schritt 5: Identifizieren des kritischen Pfads 
 Darstellung des kritischen Pfads im Netzplan
 
+![Gantt-Diagramm mit kritischem Pfad](../img/gantt_de.svg)
+
+So stellt moncapro den kritischen Pfad dar: Im Gantt-Diagramm sind die Aufgaben auf dem kritischen Pfad rot
+hervorgehoben, Aufgaben mit Puffer blau.
+
 Jetzt gibt es zwei Möglichkeiten, den kritischen Pfad zu identifizieren. Sie können entweder per Augenmaß auf Ihrem Netzplan den längsten Pfad finden, d. h. den Pfad mit der längsten Abfolge von Vorgängen. Achten Sie dabei darauf, dass es der Pfad mit der längsten Zeitdauer in Tagen ist und nicht der Pfad mit den meisten Kästchen oder Knotenpunkten. 
 
 Oder Sie können kritische Vorgänge mit der Vorwärtsterminierung oder Rückwärtsterminierung ermitteln. Dabei werden die frühesten Anfangszeitpunkte (FAZ) und Endzeitpunkte (FEZ) sowie die spätesten Anfangszeitpunkte (SAZ) und Endzeitpunkte (SEZ) für jeden Vorgang identifiziert. 
@@ -181,6 +186,15 @@ Bevor Sie die Methode der Vorwärtsterminierung/Rückwärtsterminierung anwenden
     Spätester Anfangszeitpunkt (SAZ): Der späteste Zeitpunkt des Abschlusses minus die Zeit, die zur Erfüllung der Aktivität benötigt wird.
 
 Verwenden Sie bei der Anwendung der Vorwärts-/Rückwärtsrechnung die folgende Legende für Ihr Netzplandiagramm (PZ steht für Pufferzeit, mehr dazu im nächsten Abschnitt):
+
+![Knoten im Netzplan mit FAZ, FEZ, SAZ, SEZ und Puffer](../img/knoten.png)
+
+Jeder Vorgang wird als Knoten mit sechs Feldern dargestellt: oben der Name, in der Mitte links FAZ
+und rechts FEZ, unten links SAZ und rechts SEZ. Beide Knoten folgen im Tank-Beispiel auf den Entwurf des
+Tanks (FEZ 10 = FAZ 10). Die Auswahl des Tank-Lieferanten hat einen Puffer von 17 Tagen (SAZ ≠ FAZ), der
+Bau des Fundaments liegt auf dem kritischen Pfad – dort sind FAZ = SAZ und FEZ = SEZ, der Puffer ist also
+Null.
+
 Vorwärtsrechnung: Formel für die frühesten Anfangs- und Endzeitpunkte
 
 Für die Vorwärtsrechnung/Rückwärtsrechnung gibt es zwei Formeln. Die erste Formel für die Vorwärtsrechnung wird eingesetzt, wenn man im Netzplandiagramm von Anfang bis Ende (von der ersten bis zur letzten Aktivität) geht. Diese Formel berechnet den frühesten Anfangszeitpunkt (FAZ) und den frühesten Endzeitpunkt (FEZ) jeder Aufgabe.
@@ -230,6 +244,15 @@ Puffer = SAZ - FAZ
 Diese Formeln helfen Ihnen, die Pufferzeit von Vorgängen zu berechnen, wenn Sie bei der PMP-Prüfung danach gefragt werden. Wenn Sie nicht sicher sind, welche Vorgänge auf dem kritischen Pfad liegen, denken Sie daran, kann die Pufferzeit aufschlussreich sein, denn der Puffer von Vorgängen auf dem kritischen Pfad ist immer gleich Null.
 
 Die Grafik unten zeigt die Puffer für jede Aufgabe. Sie sehen, dass die Vorgänge auf dem kritischen Pfad – Entwurf des Tanks – Bau des Fundaments – Installation des Tanks – Testläufe und Inbetriebnahme – alle einen Puffer von Null haben.
+
+Da Dauerschätzungen unsicher sind, kann sich der kritische Pfad mit der Zeit ändern – genau das greift die
+Monte-Carlo-Simulation in moncapro auf: Sie variiert die Dauern über viele Läufe und zählt, wie oft jede
+Aufgabe auf dem kritischen Pfad lag (die *Kritikalität*):
+
+![Kritikalität der Aufgaben über mehrere Simulationsläufe](../img/criticality_de.svg)
+
+Aufgaben mit hoher Kritikalität verdienen besondere Aufmerksamkeit, denn sie liegen auch unter Unsicherheit
+meist auf dem kritischen Pfad.
 
 ## Kritischer Pfad: Schlüsselbegriffe, die Sie für die PMP-Prüfung kennen müssen
 
