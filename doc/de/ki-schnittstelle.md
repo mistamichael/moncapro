@@ -222,3 +222,8 @@ Fehler werden als `ApiError` (Unterklasse von `ValueError`) mit verständlicher 
 python -m pytest tests/test_api.py                            # API, MCP-Werkzeuge, Revision/Konflikt, Port-Sperre
 npx @modelcontextprotocol/inspector                           # Werkzeuge ausprobieren: URL http://127.0.0.1:8765/mcp
 ```
+
+## Siehe auch
+
+[Ausblick: Web-Oberfläche für mehrere Nutzer](web-ui-ausblick.md) – Idee, wie diese Schnittstelle als
+Grundlage für eine Browser-Oberfläche mit mehreren gleichzeitigen Nutzern dienen könnte.

@@ -221,3 +221,8 @@ Errors are raised as `ApiError` (subclass of `ValueError`) with a readable messa
 python -m pytest tests/test_api.py                            # API, MCP tools, revision/conflict, port lock
 npx @modelcontextprotocol/inspector                           # try the tools: URL http://127.0.0.1:8765/mcp
 ```
+
+## See Also
+
+[Outlook: Web UI for Multiple Users](web-ui-outlook.md) – an idea for how this interface could serve as the
+basis for a browser UI with several concurrent users.
