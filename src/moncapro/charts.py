@@ -22,6 +22,7 @@ import plotly.graph_objects as go
 
 from .colors import interpolate_color, load_auto_color_range
 from .durations import format_time_value, hours_per_day
+from .milestones import resolve_milestones
 from .models.cpm import CPMResult, CPMTaskResult
 from .schedule import Schedule
 from .time_axis import axis_ticks, point_in_time
@@ -30,6 +31,7 @@ _COLOR_CRITICAL = "#C0392B"
 _COLOR_NORMAL = "#4472C4"
 _COLOR_BREAK = "#A0A0A0"
 _COLOR_FLOAT = "rgba(68, 114, 196, 0.25)"
+_COLOR_MILESTONE = "#8E44AD"
 _ROW_HEIGHT = 26
 _MIN_WIDTH = 0.005           # Arbeitstage – Mindestbreite für Tasks ohne Dauer
 
@@ -46,7 +48,7 @@ _LABELS = {
         'simulation': 'Monte-Carlo-Simulation', 'plan': 'Plan',
         'criticality': 'Kritikalität: Anteil der Läufe auf dem kritischen Pfad',
         'metric': 'Kennzahl', 'value': 'Wert', 'scenarios': 'Szenarien', 'workdays': 'Arbeitstage',
-        'base_plan': 'Basisplan', 'n_runs': 'Läufe',
+        'base_plan': 'Basisplan', 'n_runs': 'Läufe', 'milestones': 'Meilensteine',
     },
     'en': {
         'critical': 'Critical', 'normal': 'Normal', 'break': 'Break', 'float': 'Float',
@@ -60,7 +62,7 @@ _LABELS = {
         'simulation': 'Monte Carlo simulation', 'plan': 'Plan',
         'criticality': 'Criticality: share of runs on the critical path',
         'metric': 'Metric', 'value': 'Value', 'scenarios': 'Scenarios', 'workdays': 'Working days',
-        'base_plan': 'Base plan', 'n_runs': 'runs',
+        'base_plan': 'Base plan', 'n_runs': 'runs', 'milestones': 'Milestones',
     },
 }
 
@@ -168,6 +170,7 @@ def build_gantt_figure(schedule: Schedule, lang: str = 'de') -> go.Figure:
         if group:
             fig.add_trace(_bar_trace(group, name, color, unit, lb))
     _add_tracking(fig, result, bars, lb)
+    _add_milestones(fig, schedule, [b.label for b in bars], lang)
     deadlines = [(b, b.task.deadline) for b in bars if b.task.deadline is not None]
     with_deadline = [b for b, _ in deadlines]
     if deadlines:
@@ -216,6 +219,24 @@ def _add_tracking(fig: go.Figure, result: CPMResult, bars: Sequence[_Bar], lb: D
                       annotation_text=lb['status_date'], annotation_position="top")
 
 
+def _add_milestones(fig: go.Figure, schedule: Schedule, rows: Sequence[str], lang: str) -> None:
+    """Je Meilenstein eine senkrechte Linie über alle Zeilen (Hover: Name, Datum, Bezug) und die ID oben."""
+    if not rows:
+        return
+    lb = _LABELS.get(lang, _LABELS['de'])
+    for i, point in enumerate(resolve_milestones(schedule)):
+        hover = "<br>".join(f"<b>{line}</b>" if j == 0 else line for j, line in enumerate(point.describe(lang)))
+        fig.add_trace(go.Scatter(
+            name=lb['milestones'], legendgroup="milestones", showlegend=i == 0,
+            mode="lines+markers", x=[point.days] * len(rows), y=list(rows),
+            line=dict(color=_COLOR_MILESTONE, dash="dot", width=2),
+            marker=dict(size=6, color=_COLOR_MILESTONE, symbol="line-ns-open"),
+            hovertext=[hover] * len(rows), hoverinfo="text",
+        ))
+        fig.add_annotation(x=point.days, y=1, yref="paper", yanchor="bottom", text=point.label,
+                           showarrow=False, font=dict(color=_COLOR_MILESTONE, size=11), hovertext=hover)
+
+
 # ---------------------------------------------------------------------------
 # Ressourcen
 # ---------------------------------------------------------------------------
@@ -255,6 +276,7 @@ def build_resource_figure(schedule: Schedule, lang: str = 'de') -> Optional[go.F
             marker=dict(color=colors.get(res_id, _COLOR_NORMAL), line=dict(width=1, color="white")),
             hovertext=[_hover(b, result.time_unit, lb) for b in bars], hoverinfo="text",
         ))
+    _add_milestones(fig, schedule, rows, lang)
 
     fig.update_layout(
         title=f"{schedule.name} – {lb['resources']}",

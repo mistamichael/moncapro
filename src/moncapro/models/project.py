@@ -15,6 +15,7 @@ from pydantic import BaseModel
 from ..durations import detect_time_unit, TimeUnit
 from .resources import Person, Resource, RestInterval
 from .tasks import InstanceTask, LoopTask, SimpleTask
+from .milestone import Milestone
 from .scenario import Scenario
 from .tracking import Actual, Baseline
 
@@ -44,6 +45,7 @@ class Project(BaseModel):
     - order_volume + InstanceTask → Instanzen werden expandiert
     - total_volume + LoopTask    → Zyklen werden expandiert
     - persons                    → Personen-/Kostenauswertung aktiv
+    - milestones                 → senkrechte Linien in den Charts
     """
 
     project: str
@@ -68,6 +70,9 @@ class Project(BaseModel):
 
     # Was-wäre-wenn-Varianten des Plans (moncapro/scenarios.py)
     scenarios: Optional[List[Scenario]] = None
+
+    # Benannte Zeitpunkte am Anfang/Ende eines Tasks (moncapro/milestones.py)
+    milestones: Optional[List[Milestone]] = None
 
     # Alle Task-Typen in einem Union (spezifischere zuerst)
     tasks: List[Union[LoopTask, InstanceTask, SimpleTask]] = []

@@ -223,21 +223,22 @@ def build_server(session: Optional[ProjectSession] = None) -> MCPServer:
 
     @mcp.tool()
     def upsert_item(ctx: Context, field: str, item: Dict[str, Any]) -> Dict[str, Any]:
-        """Fügt in field = resources | persons (Schlüssel id) oder scenarios (Schlüssel name)
+        """Fügt in field = resources | persons | milestones (Schlüssel id) oder scenarios (Schlüssel name)
         einen Eintrag hinzu oder ersetzt ihn.
         Person: {"id", "name", "role", "hourly_rate", "vacation": [{"from", "to", "description"}]}.
         Ressource: {"id", "name", "type", "person_id" | "hourly_rate", "color"}.
-        Szenario: {"name", "changes": [{"task": 3, "duration_factor": 1.5}]}."""
+        Szenario: {"name", "changes": [{"task": 3, "duration_factor": 1.5}]}.
+        Meilenstein: {"id": "M1", "name": "Rohbau fertig", "ref": 5, "at": "start" | "end", "note"}."""
         return run(ctx, lambda: s.upsert_item(field, item))
 
     @mcp.tool()
     def remove_item(ctx: Context, field: str, key: str) -> int:
-        """Entfernt eine Ressource/Person (per id) oder ein Szenario (per name)."""
+        """Entfernt eine Ressource/Person/einen Meilenstein (per id) oder ein Szenario (per name)."""
         return run(ctx, lambda: s.remove_item(field, key))
 
     @mcp.tool()
     def set_list(ctx: Context, field: str, items: List[Dict[str, Any]]) -> int:
-        """Ersetzt resources, persons, resting_times oder scenarios komplett ([] entfernt die Liste).
+        """Ersetzt resources, persons, resting_times, scenarios oder milestones komplett ([] entfernt die Liste).
         resting_times: [{"after_hours": 6, "duration": "30m", "note": "..."}]."""
         return run(ctx, lambda: s.set_list(field, items))
 

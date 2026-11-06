@@ -26,6 +26,7 @@ from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List, Optional, Union
 
 from .exporters import EXPORTERS, ExportOptions, export_schedule
+from .milestones import resolve_milestones, unresolved_milestones
 from .models import Project, load_project_from_dict, save_project
 from .models.dependencies import SUCCESSOR_FIELDS, DepType, parse_task_id
 from .paths import get_cfg_dir, get_results_dir, get_work_dir
@@ -35,7 +36,7 @@ from .schedule import Schedule, build_schedule
 from .simulation import simulate, summary_rows, top_critical
 
 TaskId = Union[int, str]
-_LIST_FIELDS = ("resources", "persons", "resting_times", "scenarios")
+_LIST_FIELDS = ("resources", "persons", "resting_times", "scenarios", "milestones")
 
 
 class ApiError(ValueError):
@@ -327,7 +328,7 @@ class ProjectSession:
     # ------------------------------------------------------------------
 
     def set_list(self, field: str, items: List[Dict[str, Any]]) -> int:
-        """Ersetzt resources, persons, resting_times oder scenarios komplett."""
+        """Ersetzt resources, persons, resting_times, scenarios oder milestones komplett."""
         self._check_list_field(field)
         data = self._data()
         if items:
@@ -339,7 +340,7 @@ class ProjectSession:
 
     def upsert_item(self, field: str, item: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Fügt eine Ressource/Person (Schlüssel "id") bzw. ein Szenario (Schlüssel "name")
+        Fügt eine Ressource/Person/einen Meilenstein (Schlüssel "id") bzw. ein Szenario (Schlüssel "name")
         hinzu oder ersetzt den vorhandenen Eintrag.
         """
         key = self._item_key(field)
@@ -388,6 +389,8 @@ class ProjectSession:
         for res in project.resources or []:
             if res.person_id and res.person_id not in person_ids:
                 issues.append(f"Ressource {res.id}: unbekannte Person {res.person_id}")
+        for m in unresolved_milestones(project):
+            issues.append(f"Meilenstein {m.id}: unbekannter Task {m.ref}")
         if not issues:
             try:
                 self._schedule()
@@ -505,6 +508,9 @@ def schedule_summary(schedule: Schedule) -> Dict[str, Any]:
         "total_costs": schedule.costs.total_costs if schedule.costs else None,
         "deadline_warnings": deadline_warning_lines(result),
         "tracking": dict(tracking_summary(result)),
+        "milestones": [{"id": m.id, "name": m.milestone.name, "ref": m.milestone.ref, "at": m.milestone.at,
+                        "date": m.when.strftime(fmt) if m.when else None, "days": round(m.days, 4)}
+                       for m in resolve_milestones(schedule)],
         "tasks": tasks,
     }
 
