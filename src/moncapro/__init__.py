@@ -41,7 +41,7 @@ from .work_calendar import WorkCalendar
 from .models.expander import generate_cycle_id, parse_cycle_id
 from .schedule import Schedule, build_schedule
 
-__version__ = "0.1.1"
+__version__ = "0.2.0"
 
 __all__ = [
     'load_project', 'save_project', 'SCHEMA_VERSION', 'SchemaVersionError',

@@ -7,6 +7,8 @@ version (0.1 → 0.2) and a fix raises the patch version; see [doc/en/stability.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-06
+
 ### Added
 - Milestones: the project field `milestones` (`{id, name, ref, at: start|end, note}`) names a point in time at the
   start or end of a task. They are resolved against the calculated schedule (for loop and instance tasks: first
@@ -60,6 +62,7 @@ First release. moncapro was split off from the desktop editor [sproject](https:/
 - Command line `moncapro` and MCP server `moncapro-mcp`.
 - Extras `excel`, `html`, `svg`, `charts`, `mcp`, `all`, `dev`; Python 3.10 or newer; `mcp>=1.26,<2`.
 
-[Unreleased]: https://github.com/mistamichael/moncapro/compare/v0.1.1...main
+[Unreleased]: https://github.com/mistamichael/moncapro/compare/v0.2.0...main
+[0.2.0]: https://github.com/mistamichael/moncapro/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/mistamichael/moncapro/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/mistamichael/moncapro/releases/tag/v0.1.0
