@@ -9,6 +9,7 @@ Usage:
 """
 
 from .loader import load_project, save_project, load_project_from_dict
+from .schema import SCHEMA_VERSION, SchemaVersionError, migrate_project_data
 from .project import Project, SimpleProject, CycleProject, LoopProject, PersonProject, parse_start_date
 from .tasks import SimpleTask, ExpandableTask, InstanceTask, LoopTask, SubTask
 from .resources import Person, Resource, RESOURCE_TYPES
@@ -19,6 +20,7 @@ from .gantt import GanttCalculator, GanttResult
 
 __all__ = [
     'load_project', 'save_project', 'load_project_from_dict',
+    'SCHEMA_VERSION', 'SchemaVersionError', 'migrate_project_data',
     'Project', 'SimpleProject', 'CycleProject', 'LoopProject', 'PersonProject', 'parse_start_date',
     'SimpleTask', 'ExpandableTask', 'InstanceTask', 'LoopTask', 'SubTask', 'TaskBase',
     'Person', 'Resource', 'RESOURCE_TYPES',

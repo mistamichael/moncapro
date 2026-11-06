@@ -10,10 +10,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Dict, List, Optional, Union
 
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 from ..durations import detect_time_unit, TimeUnit
 from .resources import Person, Resource, RestInterval
+from .schema import SCHEMA_VERSION, check_schema_version
 from .tasks import InstanceTask, LoopTask, SimpleTask
 from .scenario import Scenario
 from .tracking import Actual, Baseline
@@ -44,8 +45,11 @@ class Project(BaseModel):
     - order_volume + InstanceTask → Instanzen werden expandiert
     - total_volume + LoopTask    → Zyklen werden expandiert
     - persons                    → Personen-/Kostenauswertung aktiv
+
+    ``schema_version`` ist die Format-Version der Datei (siehe models/schema.py); fehlt sie, gilt Version 1.
     """
 
+    schema_version: int = SCHEMA_VERSION
     project: str
     project_start: Optional[str] = None
 
@@ -75,6 +79,12 @@ class Project(BaseModel):
     model_config = {
         'extra': 'allow',
     }
+
+    @field_validator('schema_version', mode='before')
+    @classmethod
+    def _check_schema_version(cls, value):
+        """Zu neue oder ungültige Format-Versionen abweisen (statt Felder still zu verlieren)."""
+        return check_schema_version(value)
 
     def get_time_unit(self) -> TimeUnit:
         """Häufigste Zeiteinheit der Task-Dauern ('minutes', 'hours' oder 'days')."""
