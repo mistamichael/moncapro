@@ -13,6 +13,8 @@ Usage:
 from .models import (
     load_project,
     save_project,
+    SCHEMA_VERSION,
+    SchemaVersionError,
     Project,
     SimpleProject,
     CycleProject,
@@ -42,7 +44,7 @@ from .schedule import Schedule, build_schedule
 __version__ = "0.1.1"
 
 __all__ = [
-    'load_project', 'save_project',
+    'load_project', 'save_project', 'SCHEMA_VERSION', 'SchemaVersionError',
     'Project', 'SimpleProject', 'CycleProject', 'LoopProject', 'PersonProject',
     'SimpleTask', 'InstanceTask', 'LoopTask', 'SubTask', 'TaskBase',
     'Person', 'Resource',

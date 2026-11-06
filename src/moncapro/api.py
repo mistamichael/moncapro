@@ -27,7 +27,7 @@ from typing import Any, Callable, Dict, Iterable, List, Optional, Union
 
 from .exporters import EXPORTERS, ExportOptions, export_schedule
 from .milestones import resolve_milestones, unresolved_milestones
-from .models import Project, load_project_from_dict, save_project
+from .models import Project, SCHEMA_VERSION, load_project_from_dict, save_project
 from .models.dependencies import SUCCESSOR_FIELDS, DepType, parse_task_id
 from .paths import get_cfg_dir, get_results_dir, get_work_dir
 from .report_data import deadline_warning_lines, tracking_summary
@@ -432,7 +432,9 @@ class ProjectSession:
         return self.project
 
     def _data(self) -> Dict[str, Any]:
-        return self._require().model_dump(mode="json", by_alias=True, exclude_none=True, exclude_unset=True)
+        data = self._require().model_dump(mode="json", by_alias=True, exclude_none=True, exclude_unset=True)
+        data.pop("schema_version", None)
+        return {"schema_version": SCHEMA_VERSION, **data}     # Format-Version immer mitgeben
 
     @staticmethod
     def _validate(data: Dict[str, Any]) -> Project:

@@ -70,9 +70,12 @@ a directory of your own: `--cfg-dir` or `MONCAPRO_CFG`.
 | Configuration | [doc/en/configuration.md](https://github.com/mistamichael/moncapro/blob/main/doc/en/configuration.md) | [doc/de/config_doc.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/config_doc.md) |
 | AI interface (MCP) | [doc/en/ai-interface.md](https://github.com/mistamichael/moncapro/blob/main/doc/en/ai-interface.md) | [doc/de/ki-schnittstelle.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/ki-schnittstelle.md) |
 | Examples | [doc/en/examples.md](https://github.com/mistamichael/moncapro/blob/main/doc/en/examples.md) | [doc/de/examples.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/examples.md) |
+| Stability and public API | [doc/en/stability.md](https://github.com/mistamichael/moncapro/blob/main/doc/en/stability.md) | [doc/de/stabilitaet.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/stabilitaet.md) |
 | Critical path method | [doc/en/critical-path-method.md](https://github.com/mistamichael/moncapro/blob/main/doc/en/critical-path-method.md) | [doc/de/critical-path-method.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/critical-path-method.md) |
 | Dependency types | [doc/en/dependency-types.md](https://github.com/mistamichael/moncapro/blob/main/doc/en/dependency-types.md) | [doc/de/dependency_types.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/dependency_types.md) |
 | Dates, actuals and baseline | [doc/en/actuals-and-baseline.md](https://github.com/mistamichael/moncapro/blob/main/doc/en/actuals-and-baseline.md) | [doc/de/termine-und-ist.md](https://github.com/mistamichael/moncapro/blob/main/doc/de/termine-und-ist.md) |
+
+Changes between versions: [CHANGELOG.md](https://github.com/mistamichael/moncapro/blob/main/CHANGELOG.md).
 
 Pre-computed example results: [doc/result_examples/](https://github.com/mistamichael/moncapro/blob/main/doc/result_examples/README.md).
 

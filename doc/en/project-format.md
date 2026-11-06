@@ -31,6 +31,31 @@
 }
 ```
 
+## Format Version
+
+Every project file carries `schema_version`, a whole number that says which version of this file format it uses.
+moncapro writes it as the first field when saving. The current version is `1`.
+
+```json
+{
+  "schema_version": 1,
+  "project": "My Project",
+  "tasks": []
+}
+```
+
+- A file **without** the field (every file created before versioning) counts as version 1 and loads as before.
+  It gets the field the next time it is saved.
+- A file with a **newer** version than your moncapro knows is rejected with a clear message
+  (`pip install -U moncapro`). moncapro never ignores unknown parts of a newer format, because they would be lost on
+  saving.
+- A file with an **older** version is migrated step by step when it is loaded.
+- The version only rises for changes that older moncapro versions could not read correctly (a field renamed or
+  removed, a changed meaning). New optional fields need no new version.
+
+In Python: `from moncapro import SCHEMA_VERSION, SchemaVersionError`. Over MCP, `get_project` always includes the
+field, and `moncapro://schema` documents it.
+
 ## Duration Formats
 
 | Value   | Meaning                    |

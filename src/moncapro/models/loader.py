@@ -11,6 +11,7 @@ from typing import Union
 from pydantic import ValidationError
 
 from .project import Project
+from .schema import SCHEMA_VERSION, migrate_project_data
 
 
 def load_project(file_path: Union[str, Path]) -> Project:
@@ -25,8 +26,11 @@ def load_project(file_path: Union[str, Path]) -> Project:
 
     Raises:
         ValidationError: Wenn die JSON-Struktur ungültig ist
+        SchemaVersionError: Wenn die Datei eine neuere Format-Version hat, als diese moncapro-Version kennt
         FileNotFoundError: Wenn die Datei nicht existiert
         json.JSONDecodeError: Wenn die Datei kein gültiges JSON enthält
+
+    Ältere Format-Versionen (und Dateien ohne ``schema_version``) werden beim Laden auf den aktuellen Stand gebracht.
     """
     file_path = Path(file_path)
 
@@ -34,7 +38,7 @@ def load_project(file_path: Union[str, Path]) -> Project:
         data = json.load(f)
 
     try:
-        return Project(**data)
+        return Project(**migrate_project_data(data))
     except ValidationError:
         print(f"Validation error in {file_path}:")
         raise
@@ -49,8 +53,10 @@ def load_project_from_dict(data: dict) -> Project:
 
     Returns:
         Project-Modell
+
+    Ältere Format-Versionen werden wie in ``load_project`` auf den aktuellen Stand gebracht.
     """
-    return Project(**data)
+    return Project(**migrate_project_data(data))
 
 
 
@@ -74,6 +80,8 @@ def save_project(project: Project, file_path: Union[str, Path], indent: int = 2)
 
     # Exportiere mit Aliasen (z.B. "from" statt "from_")
     data = project.model_dump(by_alias=True, exclude_none=True, exclude_unset=True)
+    data.pop('schema_version', None)
+    data = {'schema_version': SCHEMA_VERSION, **data}     # Format-Version immer, als erstes Feld
 
     with open(file_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=indent, ensure_ascii=False)

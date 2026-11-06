@@ -21,7 +21,7 @@ from .durations import format_time_value_auto
 from .export_config import load_labels
 from .exporters import EXPORTERS, ExportOptions, export_schedule
 from .baseline import create_baseline
-from .models import load_project, save_project
+from .models import SchemaVersionError, load_project, save_project
 from .models.cpm import CPMResult
 from .paths import get_cfg_dir, get_data_dir, get_log_dir, get_results_dir
 from .report_data import deadline_warning_lines, tracking_summary
@@ -242,6 +242,8 @@ def main(argv: Optional[List[str]] = None) -> int:
         try:
             if _process(project_file, args, formats, logger):
                 success_count += 1
+        except SchemaVersionError as e:                   # erwartbarer Nutzerfehler: ohne Traceback melden
+            logger.error(f"{project_file.name}: {e}")
         except Exception as e:
             logger.error(f"Fehler bei der Berechnung für {project_file.name}: {e}", exc_info=True)
 
